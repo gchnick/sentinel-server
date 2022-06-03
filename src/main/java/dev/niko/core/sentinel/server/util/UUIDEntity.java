@@ -1,5 +1,6 @@
 package dev.niko.core.sentinel.server.util;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import lombok.Data;
 
 @Data
 @MappedSuperclass
-public abstract class UUIDEntity {
+public abstract class UUIDEntity implements Serializable {
 
     /**
      * Identificación única

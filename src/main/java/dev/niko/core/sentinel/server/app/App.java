@@ -1,6 +1,8 @@
 package dev.niko.core.sentinel.server.app;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -26,16 +28,17 @@ public class App extends UUIDEntity {
 
     @NotBlank
     @Size(max = 100)
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 100)
     private String name;
 
-    /**
-     * TODO Implementar la clase version como campo de la tabla
-     */
     @NotNull
     @Size(max = 11)
     @Valid
-    @Column(name = "current_version", nullable = false, length = 11)
+    @Embedded
+    @AttributeOverride(
+        name = "version",
+        column = @Column(name = "current_version", nullable = false, length = 11)
+    )
     private Version currentVersion;
 
     @NotBlank
