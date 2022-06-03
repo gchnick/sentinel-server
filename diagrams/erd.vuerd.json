@@ -1,0 +1,289 @@
+{
+  "canvas": {
+    "version": "2.2.11",
+    "width": 2000,
+    "height": 2000,
+    "scrollTop": -657.6666666666666,
+    "scrollLeft": -384,
+    "zoomLevel": 1,
+    "show": {
+      "tableComment": false,
+      "columnComment": false,
+      "columnDataType": true,
+      "columnDefault": false,
+      "columnAutoIncrement": false,
+      "columnPrimaryKey": true,
+      "columnUnique": true,
+      "columnNotNull": true,
+      "relationship": true
+    },
+    "database": "PostgreSQL",
+    "databaseName": "sentinel-db",
+    "canvasType": "@vuerd/builtin-sql-ddl",
+    "language": "GraphQL",
+    "tableCase": "pascalCase",
+    "columnCase": "camelCase",
+    "highlightTheme": "VS2015",
+    "bracketType": "none",
+    "setting": {
+      "relationshipDataTypeSync": true,
+      "relationshipOptimization": false,
+      "columnOrder": [
+        "columnName",
+        "columnDataType",
+        "columnNotNull",
+        "columnUnique",
+        "columnAutoIncrement",
+        "columnDefault",
+        "columnComment"
+      ]
+    },
+    "pluginSerializationMap": {}
+  },
+  "table": {
+    "tables": [
+      {
+        "name": "app",
+        "comment": "",
+        "columns": [
+          {
+            "name": "uid",
+            "comment": "",
+            "dataType": "uuid",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "c5121bac-36c2-41b9-aeb2-12040b03f6e1"
+          },
+          {
+            "name": "name",
+            "comment": "",
+            "dataType": "varchar(100)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": true,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 75.6962890625,
+              "widthDefault": 60
+            },
+            "id": "e4dfb225-d438-4fff-81ab-acf2c23d2aa5"
+          },
+          {
+            "name": "current_version",
+            "comment": "",
+            "dataType": "varchar(11)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 91.59716796875,
+              "widthComment": 60,
+              "widthDataType": 67.50146484375,
+              "widthDefault": 60
+            },
+            "id": "7d96775d-968d-4506-b61d-c87fcf088a0a"
+          },
+          {
+            "name": "update_url",
+            "comment": "",
+            "dataType": "varchar(150)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 63.43896484375,
+              "widthComment": 60,
+              "widthDataType": 75.6962890625,
+              "widthDefault": 60
+            },
+            "id": "74b53d3b-dc74-475e-8dc8-6f91feef4bd3"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 619.4444,
+          "top": 833.2225,
+          "zIndex": 141,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": "#4CAF50"
+        },
+        "visible": true,
+        "id": "f34f115b-30d3-4317-b7ce-aad8119edfc6"
+      },
+      {
+        "name": "release",
+        "comment": "",
+        "columns": [
+          {
+            "name": "uid_app",
+            "comment": "",
+            "dataType": "uuid",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "e9456784-e727-4f9d-a2c1-2393d1fc6f56"
+          },
+          {
+            "name": "version",
+            "comment": "",
+            "dataType": "varchar(11)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 67.50146484375,
+              "widthDefault": 60
+            },
+            "id": "f2c48504-a4b9-41d1-b808-5a98ab068384"
+          },
+          {
+            "name": "overview",
+            "comment": "",
+            "dataType": "varchar(300)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 75.6962890625,
+              "widthDefault": 60
+            },
+            "id": "6e5dfb02-8afb-4372-8add-4b97fce57a4a"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1094.6664,
+          "top": 842.5552,
+          "zIndex": 138,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": "#8BC34A"
+        },
+        "visible": true,
+        "id": "152b0b41-c42d-4fb8-92e3-3a383c7941af"
+      }
+    ],
+    "indexes": []
+  },
+  "memo": {
+    "memos": [
+      {
+        "value": "+ Cada aplicacion tendra una version actual pero tambien una lista de las versiones que ha tenido.",
+        "ui": {
+          "active": false,
+          "left": 616.5555555555552,
+          "top": 995.5555555555559,
+          "zIndex": 142,
+          "width": 127,
+          "height": 100
+        },
+        "id": "85297631-321d-4cf0-9c4b-a41c1e238855"
+      }
+    ]
+  },
+  "relationship": {
+    "relationships": [
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "f34f115b-30d3-4317-b7ce-aad8119edfc6",
+          "columnIds": [
+            "c5121bac-36c2-41b9-aeb2-12040b03f6e1"
+          ],
+          "x": 910.73785703125,
+          "y": 908.7225,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "152b0b41-c42d-4fb8-92e3-3a383c7941af",
+          "columnIds": [
+            "e9456784-e727-4f9d-a2c1-2393d1fc6f56"
+          ],
+          "x": 1094.6664,
+          "y": 907.8052,
+          "direction": "left"
+        },
+        "constraintName": "fk_app_to_release",
+        "visible": true,
+        "id": "2b6e9642-404a-48c6-acc2-47b4723cf53b"
+      }
+    ]
+  }
+}
