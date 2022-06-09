@@ -52,4 +52,6 @@ public class Version {
     public String toString() {
         return String.format("%d.%d.%d", mayor, minor, micro);
     }
+
+    // TODO implementar metodo para comprobar si una version es superior o inferior a otra
 }
