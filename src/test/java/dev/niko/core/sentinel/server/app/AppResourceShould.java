@@ -1,9 +1,9 @@
 package dev.niko.core.sentinel.server.app;
 
 import static dev.niko.core.sentinel.server.app.AppMother.getApp001;
-import static dev.niko.core.sentinel.server.app.AppMother.getAppAsJson;
-import static dev.niko.core.sentinel.server.app.AppMother.getNewApp001;
-import static dev.niko.core.sentinel.server.app.AppMother.newApp001AsJson;
+import static dev.niko.core.sentinel.server.app.AppMother.toJson;
+import static dev.niko.core.sentinel.server.app.AppMother.getUpdateAppDTO001;
+import static dev.niko.core.sentinel.server.app.AppMother.appDTO001AsJson;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,6 +13,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.hamcrest.Matchers.containsString;
 
 import java.util.UUID;
 
@@ -40,19 +42,24 @@ public class AppResourceShould {
     private String URL_TEMPLATE = "/api/v1/apps";
 
     @Test
-    void create_new_app() throws Exception {
+    void save_new_app() throws Exception {
         // Given
-        String mockContent = newApp001AsJson();
+        App app = getApp001();
+        AppDTO appDTO = AppMother.getAppDTO001();
+        String mockContent = appDTO001AsJson();
+        when(appService.create(appDTO)).thenReturn(app);
 
         // When
         ResultActions result = mvc.perform(post(URL_TEMPLATE)
-         .contentType(APPLICATION_JSON)
-         .content(mockContent));
+            .content(mockContent)
+            .contentType(APPLICATION_JSON));
 
         // Then
+        String expectedLocationUid = "/".concat(app.getId().toString());
         result.andExpect(status().isCreated())
-        .andExpect(content().contentType(APPLICATION_JSON))
-        .andExpect(jsonPath("$.data.app").exists());
+            .andExpect(content().contentType(APPLICATION_JSON))
+            .andExpect(header().string("Location", containsString(URL_TEMPLATE.concat(expectedLocationUid))))
+            .andExpect(jsonPath("$.data.app").exists());
     }
 
     @Test
@@ -62,12 +69,12 @@ public class AppResourceShould {
         App app001 = getApp001();
         String uidApp001 = app001.getId().toString();
         
-        App updateApp001 = getNewApp001();
-        updateApp001.setName("Icecream Delivery");
-        updateApp001.setUpdateURL("https://icecream.app/download");
-        String mockContent = getAppAsJson(updateApp001);
-        updateApp001.setId(UUID.fromString(uidApp001));
-        when(appService.update(uidApp001, app001)).thenReturn(updateApp001);
+        AppDTO dto = getUpdateAppDTO001();
+        String mockContent = toJson(dto);
+
+        App updatedApp = new App(dto.name(), dto.currentVersion(), dto.updateURL());
+        updatedApp.setId(UUID.fromString(uidApp001));
+        when(appService.update(uidApp001, dto)).thenReturn(updatedApp);
 
         // When
         ResultActions result = mvc.perform(put(URL_TEMPLATE.concat(mockPathVariable), uidApp001)
@@ -95,8 +102,8 @@ public class AppResourceShould {
         // Then
         result.andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
-            .andExpect(jsonPath("$.data.apps").isArray());
+            .andExpect(jsonPath("$.data.app").exists());
 
-        verify(appService.get(anyString()));
+        verify(appService).get(anyString());
     }
 }

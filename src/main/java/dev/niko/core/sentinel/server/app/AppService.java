@@ -2,11 +2,11 @@ package dev.niko.core.sentinel.server.app;
 
 public interface AppService {
 
-    App create(App app);
+    App create(AppDTO dto);
 
     App get(String uid);
 
-    App update(String uid, App appUpdated);
+    App update(String uid, AppDTO dto);
 
     void delete(String uid);
 }

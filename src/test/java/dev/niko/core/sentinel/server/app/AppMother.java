@@ -8,35 +8,39 @@ import dev.niko.core.sentinel.server.version.Version;
 
 public abstract class AppMother {
 
-    public static App getNewApp001() {
-        return new App("Builder Tool", new Version("1.2.0"), "https://server.app/download");
+    public static AppDTO getAppDTO001() {
+        return new AppDTO("Builder Tool", "1.2.0", "https://server.app/download");
     }
 
-    public static App getNewApp002() {
-        return new App("Coffe Delivery", new Version("2.1.14"), "https://server.app/download");
+    public static AppDTO getUpdateAppDTO001() {
+        return new AppDTO( "Coffe Delivery", "1.2.0", "https://server.coffe/download");
+    }
+
+    public static AppDTO getAppDTO002() {
+        return new AppDTO( "Coffe Delivery", "2.1.14", "https://server.app/download");
     }
     
     public static App getApp001() {
-        App app = new App("Builder Tool", new Version("1.2.0"), "https://server.app/download");
+        App app = new App("Builder Tool", new Version("1.2.0"), "https://server.app/download", null);
         app.setId(UUID.randomUUID());
         return app;
     }
 
     public static App getApp002() {
-        App app = new App("Coffe Delivery", new Version("2.1.14"), "https://server.app/download");
+        App app = new App("Coffe Delivery", new Version("2.1.14"), "https://server.app/download", null);
         app.setId(UUID.randomUUID());
         return app;
     }
 
-    public static String newApp001AsJson() throws Exception {
-        return new ObjectMapper().writeValueAsString(getNewApp001());
+    public static String appDTO001AsJson() throws Exception {
+        return new ObjectMapper().writeValueAsString(getAppDTO001());
     }
 
     public static String newApp002AsJson() throws Exception {
-        return new ObjectMapper().writeValueAsString(getNewApp002());
+        return new ObjectMapper().writeValueAsString(getAppDTO002());
     }
 
-    public static String getAppAsJson(App app) throws Exception {
+    public static String toJson(AppDTO app) throws Exception {
         return new ObjectMapper().writeValueAsString(app);
     }
 }

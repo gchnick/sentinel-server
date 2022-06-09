@@ -10,17 +10,20 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import dev.niko.core.sentinel.server.util.UUIDEntity;
 import dev.niko.core.sentinel.server.version.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "releases")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Release {
+public class Release extends UUIDEntity {
 
     @NotNull
     @Size(max = 11)

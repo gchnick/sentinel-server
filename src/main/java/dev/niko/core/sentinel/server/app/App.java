@@ -1,15 +1,20 @@
 package dev.niko.core.sentinel.server.app;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import dev.niko.core.sentinel.server.app.release.Release;
 import dev.niko.core.sentinel.server.util.UUIDEntity;
 import dev.niko.core.sentinel.server.version.Version;
 
@@ -26,14 +31,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class App extends UUIDEntity {
 
-    @NotBlank
-    @Size(max = 100)
     @Column(nullable = false, unique = true, length = 100)
     private String name;
 
-    @NotNull
-    @Size(max = 11)
-    @Valid
     @Embedded
     @AttributeOverride(
         name = "version",
@@ -41,8 +41,16 @@ public class App extends UUIDEntity {
     )
     private Version currentVersion;
 
-    @NotBlank
-    @Size(max = 150)
     @Column(name = "update_URL", nullable = false, length = 150)
     private String updateURL;
+
+    @OneToMany(cascade = ALL, fetch = LAZY, orphanRemoval = true)
+    @JoinColumn(name = "uid_app")
+    private List<Release> releases = new ArrayList<>();
+
+    public App(String name, String currentVersion, String updateURL) {
+        this.name = name;
+        this.currentVersion = new Version(currentVersion);
+        this.updateURL = updateURL;
+    }
 }

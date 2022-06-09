@@ -2,7 +2,8 @@ package dev.niko.core.sentinel.server.app;
 
 import static dev.niko.core.sentinel.server.app.AppMother.getApp001;
 import static dev.niko.core.sentinel.server.app.AppMother.getApp002;
-import static dev.niko.core.sentinel.server.app.AppMother.getNewApp001;
+import static dev.niko.core.sentinel.server.app.AppMother.getAppDTO001;
+import static dev.niko.core.sentinel.server.app.AppMother.getUpdateAppDTO001;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -34,8 +35,8 @@ public class AppServiceJpaShould {
     void throw_exception_when_app_name_is_already_registered() {
         // Arrange
         App mockApp001 = getApp001();
-        App mockNewApp = getNewApp001();
-        String appName = mockNewApp.getName();
+        AppDTO mockNewApp = getAppDTO001();
+        String appName = mockNewApp.name();
 
         // Act
         when(appRepo.findByNameIgnoreCase(appName)).thenReturn(Optional.of(mockApp001));
@@ -56,17 +57,17 @@ public class AppServiceJpaShould {
     @Test
     void throw_exception_when_app_is_updated_with_name_registered() {
         // Arrange
-        String mockAppName = "Coffe Delivery";
         App mockApp001 = getApp001();
         String idApp001 = mockApp001.getId().toString();
+        
         App mockApp002 = getApp002();
 
-        App updateApp = AppMother.getNewApp001();
-        updateApp.setName(mockAppName);
- 
+        AppDTO updateApp = getUpdateAppDTO001();
+        String mockAppNameRegistred = updateApp.name();
+        
         // Act
         when(appRepo.findById(idApp001)).thenReturn(Optional.of(mockApp001));
-        when(appRepo.findByNameIgnoreCase(mockAppName)).thenReturn(Optional.of(mockApp002));
+        when(appRepo.findByNameIgnoreCase(mockAppNameRegistred)).thenReturn(Optional.of(mockApp002));
         
         // Assert
         assertThrows(BadRequestException.class, ()-> appService.update(idApp001, updateApp));

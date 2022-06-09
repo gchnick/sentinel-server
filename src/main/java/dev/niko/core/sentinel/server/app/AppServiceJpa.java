@@ -21,11 +21,12 @@ public class AppServiceJpa implements AppService {
     private final AppJpaRepo appRepo;
 
     @Override
-    public App create(App app) {
-        String name = app.getName();
+    public App create(AppDTO dto) {
+        String name = dto.name();
         log.info("Saving new App: {}", name);
         nameShouldUnique(name);
-        return appRepo.save(app);
+        App newApp = toDAO(dto);
+        return appRepo.save(newApp);
     }
 
     @Override
@@ -35,16 +36,16 @@ public class AppServiceJpa implements AppService {
     }
 
     @Override
-    public App update(String uid, App appUpdated) {
+    public App update(String uid, AppDTO dto) {
         App app = appRepo.findById(uid).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
-        if(app.getName() != appUpdated.getName()) {
+        if(app.getName() != dto.name()) {
             log.info("App name changed, validating name");
-            nameShouldUnique(appUpdated.getName());
+            nameShouldUnique(dto.name());
         }
 
         log.info("Updating App by id: {}" , uid);
-        app.setName(appUpdated.getName());
-        app.setUpdateURL(appUpdated.getUpdateURL());
+        app.setName(dto.name());
+        app.setUpdateURL(dto.updateURL());
         return appRepo.save(app);
     }
 
@@ -54,6 +55,10 @@ public class AppServiceJpa implements AppService {
         appRepo.findById(uid).ifPresent(app -> {
             appRepo.delete(app);
         });
+    }
+
+    private App toDAO(AppDTO dto) {
+        return new App(dto.name(), dto.currentVersion(), dto.updateURL());
     }
 
     private void nameShouldUnique(String name) {
