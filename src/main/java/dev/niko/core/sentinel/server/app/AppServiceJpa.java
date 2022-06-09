@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AppServiceJpa implements AppService {
 
-    private final String ALREADY_REGISTED = "The name of app is already registered";
+    private final String ALREADY_REGISTRED = "The name of app is already registered";
     private final String NOT_EXISTS = "Id category not exists";
     
     private final AppJpaRepo appRepo;
@@ -24,7 +24,7 @@ public class AppServiceJpa implements AppService {
     public App create(App app) {
         String name = app.getName();
         log.info("Saving new App: {}", name);
-        valid(name);
+        nameShouldUnique(name);
         return appRepo.save(app);
     }
 
@@ -36,11 +36,13 @@ public class AppServiceJpa implements AppService {
 
     @Override
     public App update(String uid, App appUpdated) {
-        log.info("Updating App by id: {}" , uid);
         App app = appRepo.findById(uid).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
         if(app.getName() != appUpdated.getName()) {
-            valid(appUpdated.getName());
+            log.info("App name changed, validating name");
+            nameShouldUnique(appUpdated.getName());
         }
+
+        log.info("Updating App by id: {}" , uid);
         app.setName(appUpdated.getName());
         app.setUpdateURL(appUpdated.getUpdateURL());
         return appRepo.save(app);
@@ -54,9 +56,10 @@ public class AppServiceJpa implements AppService {
         });
     }
 
-    private void valid(String name) {
-        if(appRepo.findByName(name).isPresent()) {
-            throw new BadRequestException(ALREADY_REGISTED);
+    private void nameShouldUnique(String name) {
+        if(appRepo.findByNameIgnoreCase(name).isPresent()) {
+            log.info("App name: \"{}\" is already registred", name);
+            throw new BadRequestException(ALREADY_REGISTRED);
         }
     }
 }

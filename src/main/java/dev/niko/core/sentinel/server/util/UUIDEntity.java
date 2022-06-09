@@ -13,6 +13,9 @@ import org.hibernate.annotations.Type;
 
 import lombok.Data;
 
+/**
+ * Clase Entity Base
+ */
 @Data
 @MappedSuperclass
 public abstract class UUIDEntity implements Serializable {
