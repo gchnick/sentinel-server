@@ -8,7 +8,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import java.net.URI;
 
-import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,8 @@ public class AppResource {
     private final AppService appService;
 
     @PostMapping
-    public ResponseEntity<Response> save(@RequestBody @Valid AppDTO app) {
-        App createdApp = appService.create(app);
+    public ResponseEntity<Response> save(@RequestBody @NotBlank @Max(100) String name) {
+        App createdApp = appService.create(name);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
@@ -40,7 +41,6 @@ public class AppResource {
         return ResponseEntity.created(uri).body(
             Response.builder()
             .timeStamp(now())
-            .data(of("app", createdApp))
             .status(CREATED)
             .statusCode(CREATED.value())
             .build()
@@ -57,5 +57,8 @@ public class AppResource {
             .statusCode(OK.value())
             .build()
         );
-    }    
+    }
+
+    // TODO implement put resource
+    // TODO implement upload file update    
 }

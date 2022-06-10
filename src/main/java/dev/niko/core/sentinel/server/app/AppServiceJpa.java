@@ -4,6 +4,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import dev.niko.core.sentinel.server.app.release.Release;
+import dev.niko.core.sentinel.server.app.release.ReleaseDTO;
 import dev.niko.core.sentinel.server.exception.BadRequestException;
 import dev.niko.core.sentinel.server.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +23,11 @@ public class AppServiceJpa implements AppService {
     private final AppJpaRepo appRepo;
 
     @Override
-    public App create(AppDTO dto) {
-        String name = dto.name();
+    public App create(String name) {
         log.info("Saving new App: {}", name);
         nameShouldUnique(name);
-        App newApp = toDAO(dto);
-        return appRepo.save(newApp);
+        App app = new App(name);
+        return appRepo.save(app);
     }
 
     @Override
@@ -36,17 +37,29 @@ public class AppServiceJpa implements AppService {
     }
 
     @Override
-    public App update(String uid, AppDTO dto) {
+    public boolean isCurrent(String uid, String version) {
+        log.info("Checked if it is current by id: {}" , uid);
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void setName(String uid, String name) {
         App app = appRepo.findById(uid).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
-        if(app.getName() != dto.name()) {
+        if(app.getName() != name) {
             log.info("App name changed, validating name");
-            nameShouldUnique(dto.name());
+            nameShouldUnique(name);
         }
 
-        log.info("Updating App by id: {}" , uid);
-        app.setName(dto.name());
-        app.setUpdateURL(dto.updateURL());
-        return appRepo.save(app);
+        log.info("Changing app name by id: {} to {}" , uid, name);
+        app.setName(name);
+        appRepo.save(app);
+    }
+
+    @Override
+    public Release dumpVersion(String uid, ReleaseDTO release) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
@@ -55,10 +68,6 @@ public class AppServiceJpa implements AppService {
         appRepo.findById(uid).ifPresent(app -> {
             appRepo.delete(app);
         });
-    }
-
-    private App toDAO(AppDTO dto) {
-        return new App(dto.name(), dto.currentVersion(), dto.updateURL());
     }
 
     private void nameShouldUnique(String name) {

@@ -67,5 +67,15 @@ public class Version {
         return String.format("%d.%d.%d", mayor, minor, micro);
     }
 
-    // TODO implementar metodo para comprobar si una version es superior o inferior a otra
+    public boolean isGreater(Version version) {
+        return this.compareTo(version) > 0 ? true : false;
+    }
+
+    public int compareTo(Version version) {
+        return this.size() - version.size();
+    }
+
+    private int size() {
+        return mayor + minor + micro;
+    }
 }

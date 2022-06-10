@@ -48,9 +48,9 @@ public class App extends UUIDEntity {
     @JoinColumn(name = "uid_app")
     private List<Release> releases = new ArrayList<>();
 
-    public App(String name, String currentVersion, String updateURL) {
+    public App(String name) {
         this.name = name;
-        this.currentVersion = new Version(currentVersion);
-        this.updateURL = updateURL;
+        this.currentVersion = new Version("0.0.1");
+        this.updateURL ="";
     }
 }

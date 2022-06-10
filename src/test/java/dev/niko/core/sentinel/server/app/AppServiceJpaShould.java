@@ -42,7 +42,7 @@ public class AppServiceJpaShould {
         when(appRepo.findByNameIgnoreCase(appName)).thenReturn(Optional.of(mockApp001));
 
         //Assert
-        assertThrows(BadRequestException.class, ()-> appService.create(mockNewApp));
+        assertThrows(BadRequestException.class, ()-> appService.create(appName));
     }
 
     @Test
@@ -70,6 +70,6 @@ public class AppServiceJpaShould {
         when(appRepo.findByNameIgnoreCase(mockAppNameRegistred)).thenReturn(Optional.of(mockApp002));
         
         // Assert
-        assertThrows(BadRequestException.class, ()-> appService.update(idApp001, updateApp));
+        assertThrows(BadRequestException.class, ()-> appService.setName(idApp001, mockAppNameRegistred));
     }
 }

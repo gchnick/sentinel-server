@@ -1,9 +1,6 @@
 package dev.niko.core.sentinel.server.app;
 
 import static dev.niko.core.sentinel.server.app.AppMother.getApp001;
-import static dev.niko.core.sentinel.server.app.AppMother.toJson;
-import static dev.niko.core.sentinel.server.app.AppMother.getUpdateAppDTO001;
-import static dev.niko.core.sentinel.server.app.AppMother.appDTO001AsJson;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,9 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.hamcrest.Matchers.containsString;
-
-import java.util.UUID;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -44,10 +38,10 @@ public class AppResourceShould {
     @Test
     void save_new_app() throws Exception {
         // Given
+        String appName = "Builder Tool";
+        String mockContent = String.format("{ \"name\": \"%s\" }", appName);
         App app = getApp001();
-        AppDTO appDTO = AppMother.getAppDTO001();
-        String mockContent = appDTO001AsJson();
-        when(appService.create(appDTO)).thenReturn(app);
+        when(appService.create(appName)).thenReturn(app);
 
         // When
         ResultActions result = mvc.perform(post(URL_TEMPLATE)
@@ -69,12 +63,8 @@ public class AppResourceShould {
         App app001 = getApp001();
         String uidApp001 = app001.getId().toString();
         
-        AppDTO dto = getUpdateAppDTO001();
-        String mockContent = toJson(dto);
-
-        App updatedApp = new App(dto.name(), dto.currentVersion(), dto.updateURL());
-        updatedApp.setId(UUID.fromString(uidApp001));
-        when(appService.update(uidApp001, dto)).thenReturn(updatedApp);
+        String updateAppName = "Coffe Delivery";
+        String mockContent = String.format("{ \"name\": \"%s\" }", updateAppName);
 
         // When
         ResultActions result = mvc.perform(put(URL_TEMPLATE.concat(mockPathVariable), uidApp001)
@@ -83,8 +73,7 @@ public class AppResourceShould {
 
         // Then
         result.andExpect(status().isOk())
-        .andExpect(content().contentType(APPLICATION_JSON))
-        .andExpect(jsonPath("$.data.app").exists());
+        .andExpect(content().contentType(APPLICATION_JSON));
     }
 
     @Test
