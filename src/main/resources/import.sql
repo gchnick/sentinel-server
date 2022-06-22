@@ -1,0 +1,2 @@
+-- APP
+-- INSERT INTO apps (name, current_version, update_URL) VALUES('Build Tool', '0.0.1', '');

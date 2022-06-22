@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import dev.niko.core.sentinel.server.util.UUIDEntity;
+import dev.niko.core.sentinel.server.util.LongEntity;
 import dev.niko.core.sentinel.server.version.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Release extends UUIDEntity {
+public class Release extends LongEntity {
 
     @NotNull
     @Size(max = 11)

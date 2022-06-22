@@ -48,7 +48,7 @@ public class AppServiceJpaShould {
     @Test
     void throw_exception_when_app_by_id_not_exist() {
         // Arrange 
-        String mockUUID = UUID.randomUUID().toString();
+        UUID mockUUID = UUID.randomUUID();
 
         // Assert
         assertThrows(NotFoundException.class, () -> appService.get(mockUUID));
@@ -58,7 +58,7 @@ public class AppServiceJpaShould {
     void throw_exception_when_app_is_updated_with_name_registered() {
         // Arrange
         App mockApp001 = getApp001();
-        String idApp001 = mockApp001.getId().toString();
+        UUID idApp001 = UUID.fromString(mockApp001.getUid());
         
         App mockApp002 = getApp002();
 
@@ -66,7 +66,7 @@ public class AppServiceJpaShould {
         String mockAppNameRegistred = updateApp.name();
         
         // Act
-        when(appRepo.findById(idApp001)).thenReturn(Optional.of(mockApp001));
+        when(appRepo.findByUid(idApp001.toString())).thenReturn(Optional.of(mockApp001));
         when(appRepo.findByNameIgnoreCase(mockAppNameRegistred)).thenReturn(Optional.of(mockApp002));
         
         // Assert

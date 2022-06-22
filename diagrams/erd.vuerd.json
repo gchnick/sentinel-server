@@ -47,9 +47,9 @@
         "comment": "",
         "columns": [
           {
-            "name": "uid",
+            "name": "id",
             "comment": "",
-            "dataType": "uuid",
+            "dataType": "bigint",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -137,13 +137,36 @@
               "widthDefault": 60
             },
             "id": "74b53d3b-dc74-475e-8dc8-6f91feef4bd3"
+          },
+          {
+            "name": "uid",
+            "comment": "",
+            "dataType": "varchar",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": true,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "87763694-44f2-4e39-9e80-9adb67f4d210"
           }
         ],
         "ui": {
           "active": false,
           "left": 619.4444,
           "top": 833.2225,
-          "zIndex": 141,
+          "zIndex": 33,
           "widthName": 60,
           "widthComment": 60,
           "color": "#4CAF50"
@@ -156,9 +179,9 @@
         "comment": "",
         "columns": [
           {
-            "name": "uid_app",
+            "name": "id_app",
             "comment": "",
-            "dataType": "uuid",
+            "dataType": "bigint",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -229,7 +252,7 @@
           "active": false,
           "left": 1094.6664,
           "top": 842.5552,
-          "zIndex": 138,
+          "zIndex": 16,
           "widthName": 60,
           "widthComment": 60,
           "color": "#8BC34A"
@@ -245,10 +268,10 @@
       {
         "value": "+ Cada aplicacion tendra una version actual pero tambien una lista de las versiones que ha tenido.",
         "ui": {
-          "active": false,
-          "left": 616.5555555555552,
-          "top": 995.5555555555559,
-          "zIndex": 142,
+          "active": true,
+          "left": 619.5555555555552,
+          "top": 1016.5555555555559,
+          "zIndex": 34,
           "width": 127,
           "height": 100
         },
@@ -268,7 +291,7 @@
             "c5121bac-36c2-41b9-aeb2-12040b03f6e1"
           ],
           "x": 910.73785703125,
-          "y": 908.7225,
+          "y": 918.9725,
           "direction": "right"
         },
         "end": {

@@ -4,9 +4,12 @@ import javax.persistence.Embeddable;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -15,8 +18,9 @@ import lombok.Setter;
 @Embeddable
 @Getter
 @Setter
-@RequiredArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Version {
 
     private String version;
@@ -24,13 +28,16 @@ public class Version {
     private static final String ERROR_MESSAGE = "Format of version is invalid";
 
     @Transient
-    private final Integer mayor;
+    @JsonIgnore
+    private Integer mayor;
 
     @Transient
-    private final Integer minor;
+    @JsonIgnore
+    private Integer minor;
 
     @Transient
-    private final Integer micro;
+    @JsonIgnore
+    private Integer micro;
 
 
     @PrePersist

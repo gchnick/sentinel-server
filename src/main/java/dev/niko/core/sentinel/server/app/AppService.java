@@ -1,5 +1,8 @@
 package dev.niko.core.sentinel.server.app;
 
+import java.util.Collection;
+import java.util.UUID;
+
 import dev.niko.core.sentinel.server.app.release.Release;
 import dev.niko.core.sentinel.server.app.release.ReleaseDTO;
 
@@ -7,13 +10,15 @@ public interface AppService {
 
     App create(String name);
 
-    App get(String uid);
+    App get(UUID uid);
 
-    void setName(String uid, String name);
+    Collection<App> get();
 
-    Release dumpVersion(String uid, ReleaseDTO release);
+    void setName(UUID uid, String name);
 
-    boolean isCurrent(String uid, String version);
+    Release dumpVersion(App app, ReleaseDTO release);
 
-    void delete(String uid);
+    boolean isCurrent(UUID uid, String version);
+
+    void delete(UUID uid);
 }

@@ -1,7 +1,7 @@
 package dev.niko.core.sentinel.server.app;
 
 import static dev.niko.core.sentinel.server.app.AppMother.getApp001;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.UUID;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -81,7 +84,7 @@ public class AppResourceShould {
         // Given
         String mockPathVariable = "/{uid}";
         App mockApp001 = getApp001();
-        String uidApp001 = mockApp001.getId().toString();
+        UUID uidApp001 = UUID.fromString(mockApp001.getUid());
         when(appService.get(uidApp001)).thenReturn(mockApp001);
 
         // When
@@ -93,6 +96,6 @@ public class AppResourceShould {
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.data.app").exists());
 
-        verify(appService).get(anyString());
+        verify(appService).get(any(UUID.class));
     }
 }

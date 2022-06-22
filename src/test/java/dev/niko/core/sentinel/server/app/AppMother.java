@@ -21,14 +21,14 @@ public abstract class AppMother {
     }
     
     public static App getApp001() {
-        App app = new App("Builder Tool", new Version("1.2.0"), "https://server.app/download", null);
-        app.setId(UUID.randomUUID());
+        App app = new App("Builder Tool", new Version("1.2.0"), "https://server.app/download", null, UUID.randomUUID().toString());
+        app.setId(1L);
         return app;
     }
 
     public static App getApp002() {
-        App app = new App("Coffe Delivery", new Version("2.1.14"), "https://server.app/download", null);
-        app.setId(UUID.randomUUID());
+        App app = new App("Coffe Delivery", new Version("2.1.14"), "https://server.app/download", null,  UUID.randomUUID().toString());
+        app.setId(2L);
         return app;
     }
 
