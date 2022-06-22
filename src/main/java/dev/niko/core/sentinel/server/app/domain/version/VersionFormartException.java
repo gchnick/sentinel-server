@@ -1,6 +1,6 @@
-package dev.niko.core.sentinel.server.version;
+package dev.niko.core.sentinel.server.app.domain.version;
 
-import dev.niko.core.sentinel.server.exception.BadRequestException;
+import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 
 public class VersionFormartException extends BadRequestException {
 

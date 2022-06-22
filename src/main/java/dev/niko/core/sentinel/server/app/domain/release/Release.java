@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.release;
+package dev.niko.core.sentinel.server.app.domain.release;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -10,8 +10,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import dev.niko.core.sentinel.server.util.LongEntity;
-import dev.niko.core.sentinel.server.version.Version;
+import dev.niko.core.sentinel.server.app.domain.LongEntity;
+import dev.niko.core.sentinel.server.app.domain.version.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

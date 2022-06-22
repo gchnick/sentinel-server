@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.util;
+package dev.niko.core.sentinel.server.app.application;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

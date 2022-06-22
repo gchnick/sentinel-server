@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.release;
+package dev.niko.core.sentinel.server.app.domain.release;
 
 import java.util.UUID;
 

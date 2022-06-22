@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.version.validation;
+package dev.niko.core.sentinel.server.app.domain.version.validation;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.lang.annotation.ElementType.FIELD;

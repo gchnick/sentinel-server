@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app;
+package dev.niko.core.sentinel.server.app.application;
 
 import static java.util.Map.of;
 import static java.time.LocalDateTime.now;
@@ -26,10 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import dev.niko.core.sentinel.server.app.release.Release;
-import dev.niko.core.sentinel.server.app.release.ReleaseDTO;
-import dev.niko.core.sentinel.server.exception.ConflictException;
-import dev.niko.core.sentinel.server.util.Response;
+import dev.niko.core.sentinel.server.app.domain.App;
+import dev.niko.core.sentinel.server.app.domain.AppService;
+import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
+import dev.niko.core.sentinel.server.app.domain.release.Release;
+import dev.niko.core.sentinel.server.app.domain.release.ReleaseDTO;
 import lombok.RequiredArgsConstructor;
 
 @RestController

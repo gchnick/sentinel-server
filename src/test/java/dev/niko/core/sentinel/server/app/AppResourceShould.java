@@ -26,6 +26,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import dev.niko.core.sentinel.server.app.application.AppResource;
+import dev.niko.core.sentinel.server.app.domain.App;
+import dev.niko.core.sentinel.server.app.domain.AppService;
+
 @WebMvcTest(AppResource.class)
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public class AppResourceShould {

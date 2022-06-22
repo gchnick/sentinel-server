@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.version;
+package dev.niko.core.sentinel.server.app.domain.version;
 
 import javax.persistence.Embeddable;
 import javax.persistence.PrePersist;

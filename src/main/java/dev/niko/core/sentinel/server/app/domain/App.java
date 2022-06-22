@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app;
+package dev.niko.core.sentinel.server.app.domain;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
@@ -18,10 +18,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import dev.niko.core.sentinel.server.app.release.Release;
-import dev.niko.core.sentinel.server.util.LongEntity;
-import dev.niko.core.sentinel.server.version.Version;
-
+import dev.niko.core.sentinel.server.app.domain.release.Release;
+import dev.niko.core.sentinel.server.app.domain.version.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

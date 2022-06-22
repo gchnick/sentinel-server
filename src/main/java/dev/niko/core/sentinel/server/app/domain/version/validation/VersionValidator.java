@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.version.validation;
+package dev.niko.core.sentinel.server.app.domain.version.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

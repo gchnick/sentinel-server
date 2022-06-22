@@ -1,11 +1,12 @@
-package dev.niko.core.sentinel.server.app;
+package dev.niko.core.sentinel.server.app.infrastructure;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AppJpaRepo extends JpaRepository<App, UUID> {
+import dev.niko.core.sentinel.server.app.domain.App;
+
+public interface AppJpaRepo extends JpaRepository<App, Long> {
 
     Optional<App> findByNameIgnoreCase(String name);
 

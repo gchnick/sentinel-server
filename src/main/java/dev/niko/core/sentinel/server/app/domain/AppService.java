@@ -1,10 +1,10 @@
-package dev.niko.core.sentinel.server.app;
+package dev.niko.core.sentinel.server.app.domain;
 
 import java.util.Collection;
 import java.util.UUID;
 
-import dev.niko.core.sentinel.server.app.release.Release;
-import dev.niko.core.sentinel.server.app.release.ReleaseDTO;
+import dev.niko.core.sentinel.server.app.domain.release.Release;
+import dev.niko.core.sentinel.server.app.domain.release.ReleaseDTO;
 
 public interface AppService {
 

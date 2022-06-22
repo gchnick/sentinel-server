@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.util;
+package dev.niko.core.sentinel.server.app.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

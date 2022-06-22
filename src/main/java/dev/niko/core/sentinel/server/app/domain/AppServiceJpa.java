@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app;
+package dev.niko.core.sentinel.server.app.domain;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -6,12 +6,13 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.niko.core.sentinel.server.app.release.Release;
-import dev.niko.core.sentinel.server.app.release.ReleaseDTO;
-import dev.niko.core.sentinel.server.app.release.ReleaseJpaRepo;
-import dev.niko.core.sentinel.server.exception.BadRequestException;
-import dev.niko.core.sentinel.server.exception.NotFoundException;
-import dev.niko.core.sentinel.server.version.Version;
+import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
+import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
+import dev.niko.core.sentinel.server.app.domain.release.Release;
+import dev.niko.core.sentinel.server.app.domain.release.ReleaseDTO;
+import dev.niko.core.sentinel.server.app.domain.release.ReleaseJpaRepo;
+import dev.niko.core.sentinel.server.app.domain.version.Version;
+import dev.niko.core.sentinel.server.app.infrastructure.AppJpaRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

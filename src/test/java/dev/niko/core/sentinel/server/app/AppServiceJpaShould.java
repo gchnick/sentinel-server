@@ -2,8 +2,6 @@ package dev.niko.core.sentinel.server.app;
 
 import static dev.niko.core.sentinel.server.app.AppMother.getApp001;
 import static dev.niko.core.sentinel.server.app.AppMother.getApp002;
-import static dev.niko.core.sentinel.server.app.AppMother.getAppDTO001;
-import static dev.niko.core.sentinel.server.app.AppMother.getUpdateAppDTO001;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -18,8 +16,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.niko.core.sentinel.server.exception.BadRequestException;
-import dev.niko.core.sentinel.server.exception.NotFoundException;
+import dev.niko.core.sentinel.server.app.domain.App;
+import dev.niko.core.sentinel.server.app.domain.AppServiceJpa;
+import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
+import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
+import dev.niko.core.sentinel.server.app.infrastructure.AppJpaRepo;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -35,8 +36,7 @@ public class AppServiceJpaShould {
     void throw_exception_when_app_name_is_already_registered() {
         // Arrange
         App mockApp001 = getApp001();
-        AppDTO mockNewApp = getAppDTO001();
-        String appName = mockNewApp.name();
+        String appName = "Builder Tool";
 
         // Act
         when(appRepo.findByNameIgnoreCase(appName)).thenReturn(Optional.of(mockApp001));
@@ -62,8 +62,7 @@ public class AppServiceJpaShould {
         
         App mockApp002 = getApp002();
 
-        AppDTO updateApp = getUpdateAppDTO001();
-        String mockAppNameRegistred = updateApp.name();
+        String mockAppNameRegistred = "Coffe Delivery";
         
         // Act
         when(appRepo.findByUid(idApp001.toString())).thenReturn(Optional.of(mockApp001));

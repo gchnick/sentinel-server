@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.exception;
+package dev.niko.core.sentinel.server.app.domain.exception;
 
 public class NotFoundException extends RuntimeException {
 

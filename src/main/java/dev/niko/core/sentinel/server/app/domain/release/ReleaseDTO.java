@@ -1,9 +1,9 @@
-package dev.niko.core.sentinel.server.app.release;
+package dev.niko.core.sentinel.server.app.domain.release;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 
-import dev.niko.core.sentinel.server.version.validation.Version;
+import dev.niko.core.sentinel.server.app.domain.version.validation.Version;
 
 public record ReleaseDTO(
     @Version String version,
