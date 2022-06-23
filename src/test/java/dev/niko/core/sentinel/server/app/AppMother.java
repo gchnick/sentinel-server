@@ -18,12 +18,12 @@ public abstract class AppMother {
     }
 
     public static AppMap getAppMap001() {
-        AppMap app = new AppMap(1L, "Builder Tool", "1.2.0", "https://server.app/download", null, UUID.randomUUID().toString(), null);
+        AppMap app = new AppMap(1L, "Builder Tool", "1.2.0", "https://server.app/download", null, UUID.randomUUID().toString());
         return app;
     }
 
     public static AppMap getAppMap002() {
-        AppMap app = new AppMap(2L, "Coffe Delivery", "2.1.14", "https://server.app/download", null, UUID.randomUUID().toString(), null);
+        AppMap app = new AppMap(2L, "Coffe Delivery", "2.1.14", "https://server.app/download", null, UUID.randomUUID().toString());
         return app;
     }
 
