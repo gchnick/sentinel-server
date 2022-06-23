@@ -4,6 +4,8 @@ import java.util.List;
 
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMap;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMemento;
 
 public class AppMemento implements Memento {
 

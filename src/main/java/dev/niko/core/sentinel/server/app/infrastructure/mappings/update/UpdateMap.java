@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.infrastructure.mappings;
+package dev.niko.core.sentinel.server.app.infrastructure.mappings.update;
 
 import java.util.UUID;
 
@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import dev.niko.core.sentinel.server.app.domain.update.Update;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.Memento;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,6 +38,10 @@ public class UpdateMap {
     @Transient
     private Update entity;
 
+    public UpdateMap(Update entity) {
+        this.entity = entity;
+    }
+
     public UpdateMap(Long id, String version, String overview, UUID uid, Update entity) {
         this.id = id;
         this.version = version;
@@ -44,11 +50,26 @@ public class UpdateMap {
         this.entity = entity;
     }
 
+    @PrePersist
+    void prePersist() {
+
+        if(uid == null) {
+            uid = UUID.randomUUID();
+            entity.setUid(uid);
+        }
+
+        createMemento().update();
+    }
+
     public Memento createMemento() {
         return new UpdateMemento(entity, this);
     }
 
     public Update getEntity() {
+
+        if(entity == null) {
+            createMemento();
+        }
         return entity;
     }
 }

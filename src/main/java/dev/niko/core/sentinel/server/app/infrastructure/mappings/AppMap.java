@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import dev.niko.core.sentinel.server.app.domain.App;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,6 +63,7 @@ public class AppMap {
     void prePersist() {
         if(uid == null) {
             uid = UUID.randomUUID();
+            entity.setUid(uid);
         }
 
         if(entity != null) {

@@ -21,6 +21,11 @@ public class Update extends Entity {
     
     private String overview;
 
+    public Update(String version, String overview) {
+        this.version = new Version(version);
+        this.overview = overview;
+    }
+
     public Update(Long id, String version, String overview, UUID uid) {
         this.id = id;
         this.version = new Version(version);

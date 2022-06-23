@@ -28,7 +28,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
-import dev.niko.core.sentinel.server.app.domain.update.UpdateDTO;
+import dev.niko.core.sentinel.server.app.domain.update.Update;
+import dev.niko.core.sentinel.server.app.domain.version.validation.Version;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,8 +37,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AppResource {
 
-    private final AppService appService;
     private static final String ERROR_UPLOADS = "Internal server error when uploading file. ";
+    
+    private final AppService appService;
 
     @Value("${config.uploads.path}")
     private String path;
@@ -79,7 +81,7 @@ public class AppResource {
     }
 
     @PostMapping("/{uid}/release")
-    public ResponseEntity<Response> dumpVersion(UUID uid, @Valid UpdateDTO update, @RequestParam(required = true) MultipartFile file) {
+    public ResponseEntity<Response> releaseUpdate(UUID uid, @Valid NewUpdate update, @RequestParam(required = true) MultipartFile file) {
         App app = appService.get(uid);
         String filename = fixFilename(file.getOriginalFilename());
 
@@ -89,8 +91,10 @@ public class AppResource {
         } catch (Exception e) {
             throw new ConflictException(ERROR_UPLOADS.concat(e.getMessage()));
         }
+
+        Update _update = new Update(update.version(), update.overview());
         
-        UUID createdUid = appService.releaseUpdate(app, update);
+        UUID createdUid = appService.releaseUpdate(app, _update);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{uid}/release/{uid}")
@@ -122,6 +126,7 @@ public class AppResource {
     }
 
     private record NewApp(@NotBlank @Size(max = 100) String name) {}
+    private record NewUpdate(@Version String version, @NotBlank @Size(max = 300) String overview) {}
     // TODO implement put resource
     // TODO implement upload file update    
 }

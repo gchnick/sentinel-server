@@ -1,6 +1,7 @@
-package dev.niko.core.sentinel.server.app.infrastructure.mappings;
+package dev.niko.core.sentinel.server.app.infrastructure.mappings.update;
 
 import dev.niko.core.sentinel.server.app.domain.update.Update;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.Memento;
 
 public class UpdateMemento implements Memento {
 
