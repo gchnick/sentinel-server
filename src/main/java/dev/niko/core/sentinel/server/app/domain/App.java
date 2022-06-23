@@ -1,71 +1,62 @@
 package dev.niko.core.sentinel.server.app.domain;
 
-import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.LAZY;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import dev.niko.core.sentinel.server.app.domain.release.Release;
+import dev.niko.core.sentinel.server.app.domain.exception.NameAppInvalidException;
+import dev.niko.core.sentinel.server.app.domain.exception.VersionUpdateIsLessException;
+import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.version.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "apps")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class App extends LongEntity {
+public class App extends Entity {
 
-    @Column(nullable = false, unique = true, length = 100)
+    private static final String NAME_INVALID = "Name app is invalid.";
+    private final String VERSION_UPDATE_IS_LESS = "Version update is less that current version";
+
     private String name;
 
-    @Embedded
-    @AttributeOverride(
-        name = "version",
-        column = @Column(name = "current_version", nullable = false, length = 11)
-    )
     private Version currentVersion;
 
-    @Column(name = "update_URL", nullable = false, length = 150)
     private String updateURL;
 
-    @JsonIgnore
-    @OneToMany(cascade = ALL, fetch = LAZY, orphanRemoval = true)
-    @JoinColumn(name = "id_app")
-    private List<Release> releases = new ArrayList<>();
-
-    @Column(nullable = false, unique = true)
-    private String uid;
+    private List<Update> updates;
 
     public App(String name) {
+
+        if(name == null || name.isBlank()) {
+            throw new NameAppInvalidException(NAME_INVALID);
+        }
+
         this.name = name;
-        this.currentVersion = new Version("0.0.1");
+        this.currentVersion = new Version();
         this.updateURL ="";
+        this.updates = new ArrayList<>();
     }
 
-    public boolean addRelease(Release release) {
-        return releases.add(release);
+    public boolean isCurrent(Version version) {
+        return currentVersion.isGreater(version);
     }
 
-    @PrePersist
-    void uuid() {
-        uid = UUID.randomUUID().toString();
+    public boolean isCurrent(String version) {
+        return isCurrent(new Version(version));
+    }
+
+    public void releaseUpdate(Update update) {
+
+        if(isCurrent(update.getVersion())) {
+            throw new VersionUpdateIsLessException(VERSION_UPDATE_IS_LESS);
+        }
+
+        updates.add(update);
+        currentVersion = update.getVersion();
     }
 }

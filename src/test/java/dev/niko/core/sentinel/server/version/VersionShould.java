@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 
+import dev.niko.core.sentinel.server.app.domain.version.Version;
+
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public class VersionShould {
 

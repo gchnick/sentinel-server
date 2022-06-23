@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.domain.release;
+package dev.niko.core.sentinel.server.app.domain.update;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;

@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.niko.core.sentinel.server.app.domain.App;
-import dev.niko.core.sentinel.server.app.domain.AppServiceJpa;
+import dev.niko.core.sentinel.server.app.domain.AppServiceImp;
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
 import dev.niko.core.sentinel.server.app.infrastructure.AppJpaRepo;
@@ -30,7 +30,7 @@ public class AppServiceJpaShould {
     AppJpaRepo appRepo;
 
     @InjectMocks
-    AppServiceJpa appService;
+    AppServiceImp appService;
 
     @Test
     void throw_exception_when_app_name_is_already_registered() {

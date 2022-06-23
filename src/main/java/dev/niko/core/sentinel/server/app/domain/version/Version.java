@@ -1,48 +1,29 @@
 package dev.niko.core.sentinel.server.app.domain.version;
 
-import javax.persistence.Embeddable;
-import javax.persistence.PrePersist;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import dev.niko.core.sentinel.server.shared.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
- * @version 0.2.0
+ * Esta clase es un Value Object de tipo String que representa
+ * versiones de software
  */
-@Embeddable
-@Getter
-@Setter
 @EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor
-public class Version {
-
-    private String version;
+public class Version implements ValueObject<String> {
 
     private static final String ERROR_MESSAGE = "Format of version is invalid";
 
-    @Transient
-    @JsonIgnore
-    private Integer mayor;
+    private final Integer mayor;
 
-    @Transient
-    @JsonIgnore
-    private Integer minor;
+    private final Integer minor;
 
-    @Transient
-    @JsonIgnore
-    private Integer micro;
+    private final Integer micro;
 
-
-    @PrePersist
-    public void prePersist() {
-        version = this.toString();
+    public Version() {
+        this.mayor = 0;
+        this.minor = 0;
+        this.micro = 0;
     }
 
     public Version(String version) {
@@ -69,11 +50,6 @@ public class Version {
         this.micro = micro;  
     }
 
-    @Override
-    public String toString() {
-        return String.format("%d.%d.%d", mayor, minor, micro);
-    }
-
     public boolean isGreater(Version version) {
         return this.compareTo(version) > 0 ? true : false;
     }
@@ -85,4 +61,10 @@ public class Version {
     private int size() {
         return mayor + minor + micro;
     }
+
+    @Override
+    public String value() {
+        return String.format("%d.%d.%d", mayor, minor, micro);
+    }
+
 }

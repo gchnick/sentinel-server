@@ -29,8 +29,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
-import dev.niko.core.sentinel.server.app.domain.release.Release;
-import dev.niko.core.sentinel.server.app.domain.release.ReleaseDTO;
+import dev.niko.core.sentinel.server.app.domain.update.ReleaseDTO;
+import dev.niko.core.sentinel.server.app.domain.update.Update;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -104,7 +104,7 @@ public class AppResource {
             throw new ConflictException(ERROR_UPLOADS.concat(e.getMessage()));
         }
         
-        Release createdRelease = appService.dumpVersion(app, release);
+        Update createdRelease = appService.dumpVersion(app, release);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{uid}/release/{uid}")
