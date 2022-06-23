@@ -14,6 +14,8 @@ public class AppMemento implements Memento {
 
     public AppMemento(App entity, AppMap map) {
         
+        this.map = map;
+        
         if(entity == null) {
             this.entity = new App(
                 map.getId(),
@@ -26,7 +28,6 @@ public class AppMemento implements Memento {
         }
         
         this.entity = entity;
-        this.map = map;
     }
 
     private List<Update> getUpdates() {

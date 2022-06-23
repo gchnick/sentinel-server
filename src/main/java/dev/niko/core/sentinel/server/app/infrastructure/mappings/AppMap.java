@@ -47,7 +47,7 @@ public class AppMap {
     
     @OneToMany(cascade = ALL, fetch = LAZY, orphanRemoval = true)
     @JoinColumn(name = "id_app")
-    private List<UpdateMap> updates = new ArrayList<>();
+    private List<UpdateMap> updates;
 
     @Column(nullable = false, unique = true)
     private String uid;
@@ -57,6 +57,7 @@ public class AppMap {
 
     public AppMap(App entity) {
         this.entity = entity;
+        updates = new ArrayList<>();
     }
 
     @PrePersist()
