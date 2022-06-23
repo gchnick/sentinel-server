@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public abstract class Entity {
 
-    private Long id;
+    protected Long id;
 
-    private UUID uid;
+    protected UUID uid;
 }

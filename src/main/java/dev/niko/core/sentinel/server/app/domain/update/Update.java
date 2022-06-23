@@ -1,5 +1,7 @@
 package dev.niko.core.sentinel.server.app.domain.update;
 
+import java.util.UUID;
+
 import dev.niko.core.sentinel.server.app.domain.Entity;
 import dev.niko.core.sentinel.server.app.domain.version.Version;
 
@@ -18,4 +20,11 @@ public class Update extends Entity {
     private Version version;
     
     private String overview;
+
+    public Update(Long id, String version, String overview, UUID uid) {
+        this.id = id;
+        this.version = new Version(version);
+        this.overview = overview;
+        this.uid = uid;
+    }
 }

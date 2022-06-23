@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import dev.niko.core.sentinel.server.app.domain.exception.NameAppInvalidException;
 import dev.niko.core.sentinel.server.app.domain.exception.VersionUpdateIsLessException;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class App extends Entity implements AggregateRoot {
 
     private static final String NAME_INVALID = "Name app is invalid.";
-    private final String VERSION_UPDATE_IS_LESS = "Version update is less that current version";
+    private static final String VERSION_UPDATE_IS_LESS = "Version update is less that current version";
 
     private String name;
 
@@ -34,15 +35,27 @@ public class App extends Entity implements AggregateRoot {
     private List<Update> updates;
 
     public App(String name) {
+        setName(name);
+        this.currentVersion = new Version();
+        this.updateURL ="";
+        this.updates = new ArrayList<>();
+    }
 
+    public App(Long id, String name, String currentVersion, String updateURL, List<Update> updates, UUID uid){
+        this.id = id;
+        setName(name);
+        this.currentVersion = new Version(currentVersion);
+        this.updateURL = updateURL;
+        this.updates = updates;
+        this.uid= uid;
+    }
+
+    public void setName(String name) {
         if(name == null || name.isBlank()) {
             throw new NameAppInvalidException(NAME_INVALID);
         }
 
         this.name = name;
-        this.currentVersion = new Version();
-        this.updateURL ="";
-        this.updates = new ArrayList<>();
     }
 
     public boolean isCurrent(Version version) {

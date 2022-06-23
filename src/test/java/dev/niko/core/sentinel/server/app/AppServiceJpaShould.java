@@ -1,7 +1,7 @@
 package dev.niko.core.sentinel.server.app;
 
-import static dev.niko.core.sentinel.server.app.AppMother.getApp001;
-import static dev.niko.core.sentinel.server.app.AppMother.getApp002;
+import static dev.niko.core.sentinel.server.app.AppMother.getAppMap001;
+import static dev.niko.core.sentinel.server.app.AppMother.getAppMap002;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -16,11 +16,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppServiceImp;
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
-import dev.niko.core.sentinel.server.app.infrastructure.AppJpaRepo;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMap;
+import dev.niko.core.sentinel.server.app.infrastructure.repositories.SpringDataAppRepo;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -35,11 +35,11 @@ public class AppServiceJpaShould {
     @Test
     void throw_exception_when_app_name_is_already_registered() {
         // Arrange
-        App mockApp001 = getApp001();
+        AppMap mockAppMap001 = getAppMap001();
         String appName = "Builder Tool";
 
         // Act
-        when(appRepo.findByNameIgnoreCase(appName)).thenReturn(Optional.of(mockApp001));
+        when(appRepo.findByNameIgnoreCase(appName)).thenReturn(Optional.of(mockAppMap001));
 
         //Assert
         assertThrows(BadRequestException.class, ()-> appService.create(appName));
@@ -57,15 +57,15 @@ public class AppServiceJpaShould {
     @Test
     void throw_exception_when_app_is_updated_with_name_registered() {
         // Arrange
-        App mockApp001 = getApp001();
-        UUID idApp001 = UUID.fromString(mockApp001.getUid());
+        AppMap mockApp001 = getAppMap001();
+        UUID idApp001 = mockApp001.getUid();
         
-        App mockApp002 = getApp002();
+        AppMap mockApp002 = getAppMap002();
 
         String mockAppNameRegistred = "Coffe Delivery";
         
         // Act
-        when(appRepo.findByUid(idApp001.toString())).thenReturn(Optional.of(mockApp001));
+        when(appRepo.findByUid(idApp001)).thenReturn(Optional.of(mockApp001));
         when(appRepo.findByNameIgnoreCase(mockAppNameRegistred)).thenReturn(Optional.of(mockApp002));
         
         // Assert

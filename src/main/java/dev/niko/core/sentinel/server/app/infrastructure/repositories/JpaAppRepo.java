@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppRepo;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMap;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -17,7 +18,7 @@ public class JpaAppRepo implements AppRepo {
 
     @Override
     public Optional<App> findByUid(UUID uid) {
-        return repo.findByUid(uid);
+        return Optional.of(repo.findByUid(uid).get().getEntity());
     }
 
     @Override
@@ -27,12 +28,13 @@ public class JpaAppRepo implements AppRepo {
 
     @Override
     public UUID save(App app) {
-        return repo.save(app).getUid();
+        AppMap _app = new AppMap(app);
+        return repo.save(_app).getUid();
     }
 
     @Override
     public void delete(App app) {
-        repo.delete(app);
-        
+        AppMap _app = new AppMap(app);
+        repo.delete(_app); 
     }  
 }

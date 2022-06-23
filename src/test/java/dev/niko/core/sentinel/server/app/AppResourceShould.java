@@ -48,7 +48,8 @@ public class AppResourceShould {
         String appName = "Builder Tool";
         String mockContent = String.format("{ \"name\": \"%s\" }", appName);
         App app = getApp001();
-        when(appService.create(appName)).thenReturn(app);
+        UUID idApp001 = app.getUid();
+        when(appService.create(appName)).thenReturn(idApp001);
 
         // When
         ResultActions result = mvc.perform(post(URL_TEMPLATE)
@@ -56,7 +57,7 @@ public class AppResourceShould {
             .contentType(APPLICATION_JSON));
 
         // Then
-        String expectedLocationUid = "/".concat(app.getId().toString());
+        String expectedLocationUid = "/".concat(idApp001.toString());
         result.andExpect(status().isCreated())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(header().string("Location", containsString(URL_TEMPLATE.concat(expectedLocationUid))))
@@ -88,7 +89,7 @@ public class AppResourceShould {
         // Given
         String mockPathVariable = "/{uid}";
         App mockApp001 = getApp001();
-        UUID uidApp001 = UUID.fromString(mockApp001.getUid());
+        UUID uidApp001 = mockApp001.getUid();
         when(appService.get(uidApp001)).thenReturn(mockApp001);
 
         // When
