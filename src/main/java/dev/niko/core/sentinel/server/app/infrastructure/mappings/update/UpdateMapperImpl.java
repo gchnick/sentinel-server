@@ -1,8 +1,11 @@
 package dev.niko.core.sentinel.server.app.infrastructure.mappings.update;
 
+import org.springframework.stereotype.Component;
+
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.infrastructure.mappings.DataMapperException;
 
+@Component
 public class UpdateMapperImpl implements UpdateMapper {
 
     @Override

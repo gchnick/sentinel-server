@@ -1,9 +1,12 @@
 package dev.niko.core.sentinel.server.app.infrastructure.mappings;
 
+import org.springframework.stereotype.Component;
+
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;
 
+@Component
 @RequiredArgsConstructor
 public class AppMapperImpl implements AppMapper {
 
