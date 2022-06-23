@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.update.UpdateRepo;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMap;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -17,8 +16,8 @@ public class JpaUpdateRepo implements UpdateRepo  {
 
     @Override
     public UUID save(Update update) {
-        UpdateMap _update = new UpdateMap(update);
-        return repo.save(_update).getUid();
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }

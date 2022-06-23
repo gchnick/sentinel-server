@@ -9,10 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import dev.niko.core.sentinel.server.app.domain.update.Update;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.Memento;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -35,19 +32,11 @@ public class UpdateMap {
     @Column(nullable = false, unique = true)
     private String uid;
 
-    @Transient
-    private Update entity;
-
-    public UpdateMap(Update entity) {
-        this.entity = entity;
-    }
-
-    public UpdateMap(Long id, String version, String overview, UUID uid, Update entity) {
+    public UpdateMap(Long id, String version, String overview, UUID uid) {
         this.id = id;
         this.version = version;
         this.overview = overview;
         this.uid = uid.toString();
-        this.entity = entity;
     }
 
     @PrePersist
@@ -55,22 +44,7 @@ public class UpdateMap {
 
         if(uid == null) {
             uid = UUID.randomUUID().toString();
-            entity.setUid(uid);
         }
-
-        createMemento().update();
-    }
-
-    public Memento createMemento() {
-        return new UpdateMemento(entity, this);
-    }
-
-    public Update getEntity() {
-
-        if(entity == null) {
-            createMemento();
-        }
-        return entity;
     }
 
     public void setUid(UUID uid) {

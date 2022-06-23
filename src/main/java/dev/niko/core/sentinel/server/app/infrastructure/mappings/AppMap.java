@@ -16,9 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,41 +45,17 @@ public class AppMap {
     
     @OneToMany(cascade = ALL, fetch = LAZY, orphanRemoval = true)
     @JoinColumn(name = "id_app")
-    private List<UpdateMap> updates;
+    private List<UpdateMap> updates = new ArrayList<>();
 
     @Column(nullable = false, unique = true)
     private String uid;
 
-    @Transient
-    private App entity;
-
-    public AppMap(App entity) {
-        this.entity = entity;
-        updates = new ArrayList<>();
-    }
 
     @PrePersist()
     void prePersist() {
         if(uid == null) {
             uid = UUID.randomUUID().toString();
-            entity.setUid(uid);
         }
-
-        if(entity != null) {
-            createMemento().update();
-        }
-    }
-
-    private Memento createMemento() {
-        return new AppMemento(entity, this);
-    }
-
-    public App getEntity() {
-        if(entity == null) {
-            createMemento();
-        }
-
-        return entity;
     }
 
     public void setUid(UUID uid) {
