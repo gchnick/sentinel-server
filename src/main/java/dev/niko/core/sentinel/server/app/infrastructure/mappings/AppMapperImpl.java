@@ -1,8 +1,13 @@
 package dev.niko.core.sentinel.server.app.infrastructure.mappings;
 
 import dev.niko.core.sentinel.server.app.domain.App;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMapper;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class AppMapperImpl implements AppMapper {
+
+    private final UpdateMapper mapper;
     
     @Override
     public App toDomain(AppMap map) throws DataMapperException {
@@ -11,7 +16,7 @@ public class AppMapperImpl implements AppMapper {
             map.getName(),
             map.getCurrentVersion(),
             map.getUpdateURL(),
-            null,
+            map.getUpdates().stream().map(u -> mapper.toDomain(u) ).toList(),
             map.getUid()
         );
     }
@@ -23,7 +28,7 @@ public class AppMapperImpl implements AppMapper {
             domain.getName(),
             domain.getCurrentVersion().value(),
             domain.getUpdateURL(),
-            null,
+            domain.getUpdates().stream().map( d -> mapper.toMap(d) ).toList(),
             domain.getUid().toString()
         );
     }
