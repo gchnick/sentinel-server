@@ -65,7 +65,7 @@ public class AppServiceJpaShould {
         String mockAppNameRegistred = "Coffe Delivery";
         
         // Act
-        when(appRepo.findByUid(idApp001)).thenReturn(Optional.of(mockApp001));
+        when(appRepo.findByUid(idApp001.toString())).thenReturn(Optional.of(mockApp001));
         when(appRepo.findByNameIgnoreCase(mockAppNameRegistred)).thenReturn(Optional.of(mockApp002));
         
         // Assert

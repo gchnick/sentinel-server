@@ -31,19 +31,19 @@ public class AppServiceImp implements AppService {
     @Override
     public App get(UUID uid) {
         log.info("Finding App by id: {}" , uid);
-        return appRepo.findByUid(uid).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
+        return appRepo.findByUid(uid.toString()).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
     }
 
     @Override
     public boolean isCurrent(UUID uid, String version) {
         log.info("Checked if it is current by id: {}" , uid);
-        App app = appRepo.findByUid(uid).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
+        App app = appRepo.findByUid(uid.toString()).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
         return app.isCurrent(version);
     }
 
     @Override
     public void setName(UUID uid, String name) {
-        App app = appRepo.findByUid(uid).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
+        App app = appRepo.findByUid(uid.toString()).orElseThrow(() -> new NotFoundException(NOT_EXISTS));
         if(app.getName() != name) {
             log.info("App name changed, validating name");
             nameShouldUnique(name);
@@ -66,7 +66,7 @@ public class AppServiceImp implements AppService {
     @Override
     public void delete(UUID uid) {
         log.info("Deleting App by id: {} ", uid);
-        appRepo.findByUid(uid).ifPresent(app -> {
+        appRepo.findByUid(uid.toString()).ifPresent(app -> {
             appRepo.delete(app);
         });
     }

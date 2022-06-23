@@ -7,7 +7,7 @@ import dev.niko.core.sentinel.server.shared.Repository;
 
 public interface AppRepo extends Repository<App> {
 
-    Optional<App> findByUid(UUID uid);
+    Optional<App> findByUid(String uid);
 
     boolean isAlreadyRegisteredName(String name);
 

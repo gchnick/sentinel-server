@@ -17,7 +17,7 @@ public class JpaAppRepo implements AppRepo {
     private final SpringDataAppRepo repo;
 
     @Override
-    public Optional<App> findByUid(UUID uid) {
+    public Optional<App> findByUid(String uid) {
         return Optional.of(repo.findByUid(uid).get().getEntity());
     }
 

@@ -50,7 +50,7 @@ public class AppMap {
     private List<UpdateMap> updates = new ArrayList<>();
 
     @Column(nullable = false, unique = true)
-    private UUID uid;
+    private String uid;
 
     @Transient
     private App entity;
@@ -62,7 +62,7 @@ public class AppMap {
     @PrePersist()
     void prePersist() {
         if(uid == null) {
-            uid = UUID.randomUUID();
+            uid = UUID.randomUUID().toString();
             entity.setUid(uid);
         }
 
@@ -81,5 +81,13 @@ public class AppMap {
         }
 
         return entity;
+    }
+
+    public void setUid(UUID uid) {
+        this.uid = uid.toString();
+    }
+
+    public UUID getUid() {
+        return UUID.fromString(uid);
     }
 }

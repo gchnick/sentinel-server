@@ -33,7 +33,7 @@ public class UpdateMap {
     private String overview;
 
     @Column(nullable = false, unique = true)
-    private UUID uid;
+    private String uid;
 
     @Transient
     private Update entity;
@@ -46,7 +46,7 @@ public class UpdateMap {
         this.id = id;
         this.version = version;
         this.overview = overview;
-        this.uid = uid;
+        this.uid = uid.toString();
         this.entity = entity;
     }
 
@@ -54,7 +54,7 @@ public class UpdateMap {
     void prePersist() {
 
         if(uid == null) {
-            uid = UUID.randomUUID();
+            uid = UUID.randomUUID().toString();
             entity.setUid(uid);
         }
 
@@ -71,5 +71,13 @@ public class UpdateMap {
             createMemento();
         }
         return entity;
+    }
+
+    public void setUid(UUID uid) {
+        this.uid = uid.toString();
+    }
+
+    public UUID getUid() {
+        return UUID.fromString(uid);
     }
 }
