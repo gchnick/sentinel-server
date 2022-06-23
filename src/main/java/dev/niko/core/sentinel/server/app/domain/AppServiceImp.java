@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
-import dev.niko.core.sentinel.server.app.domain.update.ReleaseDTO;
+import dev.niko.core.sentinel.server.app.domain.update.UpdateDTO;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.update.UpdateRepo;
 import dev.niko.core.sentinel.server.app.domain.version.Version;
@@ -57,7 +57,7 @@ public class AppServiceImp implements AppService {
     }
 
     @Override
-    public UUID releaseUpdate(App app, ReleaseDTO update) {
+    public UUID releaseUpdate(App app, UpdateDTO update) {
         log.info("Release update by app: {}" , app.getName());
         Version version = new Version(update.version());
         Update _update = new Update(version, update.overview());

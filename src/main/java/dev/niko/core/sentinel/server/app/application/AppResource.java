@@ -1,6 +1,5 @@
 package dev.niko.core.sentinel.server.app.application;
 
-import static java.util.Map.of;
 import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -29,8 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
-import dev.niko.core.sentinel.server.app.domain.update.ReleaseDTO;
-import dev.niko.core.sentinel.server.app.domain.update.Update;
+import dev.niko.core.sentinel.server.app.domain.update.UpdateDTO;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -46,11 +44,11 @@ public class AppResource {
 
     @PostMapping
     public ResponseEntity<Response> save(@RequestBody @Valid NewApp app) {
-        App createdApp = appService.create(app.name());
+        UUID uid = appService.create(app.name());
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{uid}")
-            .buildAndExpand(createdApp.getUid())
+            .buildAndExpand(uid.toString())
             .toUri();
         return ResponseEntity.created(uri).body(
             Response.builder()
@@ -68,18 +66,6 @@ public class AppResource {
         );
     }
 
-    @GetMapping()
-    public ResponseEntity<Response> get() {
-        return ResponseEntity.ok(
-            Response.builder()
-            .timeStamp(now())
-            .data(of("apps", appService.get()))
-            .status(OK)
-            .statusCode(OK.value())
-            .build()
-        );
-    }
-
     @PostMapping("/{uid}/name")
     public ResponseEntity<Response> edit(UUID uid, @Valid NewApp app) {
         appService.setName(uid, app.name());
@@ -93,7 +79,7 @@ public class AppResource {
     }
 
     @PostMapping("/{uid}/release")
-    public ResponseEntity<Response> dumpVersion(UUID uid, @Valid ReleaseDTO release, @RequestParam(required = true) MultipartFile file) {
+    public ResponseEntity<Response> dumpVersion(UUID uid, @Valid UpdateDTO update, @RequestParam(required = true) MultipartFile file) {
         App app = appService.get(uid);
         String filename = fixFilename(file.getOriginalFilename());
 
@@ -104,11 +90,11 @@ public class AppResource {
             throw new ConflictException(ERROR_UPLOADS.concat(e.getMessage()));
         }
         
-        Update createdRelease = appService.dumpVersion(app, release);
+        UUID createdUid = appService.releaseUpdate(app, update);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{uid}/release/{uid}")
-            .buildAndExpand(app.getUid(), createdRelease.getId())
+            .buildAndExpand(app.getUid().toString(), createdUid.toString())
             .toUri();
         return ResponseEntity.created(uri).body(
             Response.builder()

@@ -1,6 +1,8 @@
 package dev.niko.core.sentinel.server.app.domain;
 
 
+import static lombok.AccessLevel.PROTECTED;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import dev.niko.core.sentinel.server.app.domain.exception.NameAppInvalidExceptio
 import dev.niko.core.sentinel.server.app.domain.exception.VersionUpdateIsLessException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.version.Version;
+import dev.niko.core.sentinel.server.shared.AggregateRoot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,9 +18,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class App extends Entity {
+public class App extends Entity implements AggregateRoot {
 
     private static final String NAME_INVALID = "Name app is invalid.";
     private final String VERSION_UPDATE_IS_LESS = "Version update is less that current version";

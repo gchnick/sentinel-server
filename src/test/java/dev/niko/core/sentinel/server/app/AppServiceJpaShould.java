@@ -27,7 +27,7 @@ import dev.niko.core.sentinel.server.app.infrastructure.AppJpaRepo;
 public class AppServiceJpaShould {
 
     @Mock
-    AppJpaRepo appRepo;
+    SpringDataAppRepo appRepo;
 
     @InjectMocks
     AppServiceImp appService;

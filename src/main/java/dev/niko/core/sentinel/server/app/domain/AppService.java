@@ -2,7 +2,7 @@ package dev.niko.core.sentinel.server.app.domain;
 
 import java.util.UUID;
 
-import dev.niko.core.sentinel.server.app.domain.update.ReleaseDTO;
+import dev.niko.core.sentinel.server.app.domain.update.UpdateDTO;
 
 public interface AppService {
 
@@ -12,7 +12,7 @@ public interface AppService {
 
     void setName(UUID uid, String name);
 
-    UUID releaseUpdate(App app, ReleaseDTO release);
+    UUID releaseUpdate(App app, UpdateDTO release);
 
     boolean isCurrent(UUID uid, String version);
 
