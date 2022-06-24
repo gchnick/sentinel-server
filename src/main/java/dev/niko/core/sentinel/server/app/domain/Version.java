@@ -21,25 +21,25 @@ public class Version implements ValueObject<String> {
 
     private final Integer minor;
 
-    private final Integer micro;
+    private final Integer patch;
 
     public Version() {
         this.mayor = 0;
         this.minor = 0;
-        this.micro = 1;
+        this.patch = 1;
     }
 
     public Version(String version) {
         // TODO implementar revisar el formato con regex
-        int mayor = 0, minor = 0, micro = 0;
+        int mayor = 0, minor = 0, patch = 0;
         String[] args = version.split("\\.");
 
         try{
             mayor = Integer.valueOf(args[0]);
             minor = Integer.valueOf(args[1]);
-            micro = Integer.valueOf(args[2]);
+            patch = Integer.valueOf(args[2]);
 
-            if(mayor < 0 || minor < 0 || micro < 0) {
+            if(mayor < 0 || minor < 0 || patch < 0) {
                 throw new VersionFormartException(ERROR_MESSAGE);
             }
 
@@ -50,20 +50,22 @@ public class Version implements ValueObject<String> {
 
         this.mayor = mayor;
         this.minor = minor;
-        this.micro = micro;  
+        this.patch = patch;  
     }
 
     public boolean isGreater(Version version) {
         if(this.equals(version)) return false;
-        if(mayor > version.mayor) return true;
-        if(minor > version.minor) return true;
-        if(micro > version.micro) return true;
-        return false;
+
+        return this.size() > version.size() ? true : false;
+    }
+
+    private int size() {
+        return mayor * 1000000 + minor * 1000 + patch;
     }
 
     @Override
     public String value() {
-        return String.format("%d.%d.%d", mayor, minor, micro);
+        return String.format("%d.%d.%d", mayor, minor, patch);
     }
 
 }
