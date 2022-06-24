@@ -72,7 +72,7 @@ public class AppResource {
     }
 
     @PostMapping("/{uid}/name")
-    public ResponseEntity<Response> edit(UUID uid, @Valid NewApp app) {
+    public ResponseEntity<Response> edit(@PathVariable UUID uid, @RequestBody @Valid NewApp app) {
         appService.setName(uid, app.name());
         return ResponseEntity.ok(
             Response.builder()
@@ -84,7 +84,7 @@ public class AppResource {
     }
 
     @PostMapping("/{uid}/release")
-    public ResponseEntity<Response> releaseUpdate(UUID uid, @Valid NewUpdate update, @RequestParam(required = true) MultipartFile file) {
+    public ResponseEntity<Response> releaseUpdate(@PathVariable UUID uid, @Valid NewUpdate update, @RequestParam(required = true) MultipartFile file) {
         App app = appService.get(uid);
         String filename = fixFilename(file.getOriginalFilename());
 
@@ -113,7 +113,7 @@ public class AppResource {
     }
 
     @DeleteMapping("/{uid}")
-    public ResponseEntity<?> delete(UUID uid) {
+    public ResponseEntity<?> delete(@PathVariable UUID uid) {
         appService.delete(uid);
         return ResponseEntity.noContent().build();
     }
