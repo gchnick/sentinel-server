@@ -64,6 +64,20 @@ public class VersionShould {
         assertTrue(isGreater);
     }
 
+    // FIXME bug para identificar correctamente una version mayor
+    @Test
+    void return_true_if_greater_when_the_sum_is_greater() {
+        // Arrange
+        Version version = new Version("1.0.0");
+        Version otherVersion = new Version("0.4.7");
+
+        // Act
+        boolean isGreater = version.isGreater(otherVersion);
+
+        // Assert
+        assertTrue(isGreater);
+    }
+
     @Test
     void return_false_if_equal() {
         // Arrange
