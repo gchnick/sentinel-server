@@ -72,6 +72,10 @@ public class App extends Entity implements AggregateRoot {
             throw new VersionUpdateIsLessException(VERSION_UPDATE_IS_LESS);
         }
 
+        if(updates == null) {
+            updates = new ArrayList<>();
+        }
+
         updates.add(update);
         currentVersion = update.getVersion();
     }
