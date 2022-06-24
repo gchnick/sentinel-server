@@ -55,7 +55,6 @@ public class Version implements ValueObject<String> {
 
         }
         catch(NumberFormatException e) {
-            e.printStackTrace();
             return false;
         }
 
