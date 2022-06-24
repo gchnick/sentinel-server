@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import dev.niko.core.sentinel.server.app.application.validation.Version;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.shared.mapper.AppMapper;
+import dev.niko.core.sentinel.server.app.shared.mapper.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -41,7 +41,8 @@ public class AppResource {
     private static final String ERROR_UPLOADS = "Internal server error when uploading file. ";
     
     private final AppService appService;
-    private final AppMapper mapper;
+    private final AppMapper appMapper;
+    private final UpdateMapper updateMapper;
 
     @Value("${config.uploads.path}")
     private String path;
@@ -57,6 +58,7 @@ public class AppResource {
         return ResponseEntity.created(uri).body(
             Response.builder()
             .timeStamp(now())
+            .message("Application created successfully")
             .status(CREATED)
             .statusCode(CREATED.value())
             .build()
@@ -67,7 +69,7 @@ public class AppResource {
     public ResponseEntity<?> get(@PathVariable UUID uid) {
         App app = appService.get(uid);
         return ResponseEntity.ok(
-            mapper.toReponse(app)
+            appMapper.toReponse(app)
         );
     }
 
@@ -77,6 +79,7 @@ public class AppResource {
         return ResponseEntity.ok(
             Response.builder()
             .timeStamp(now())
+            .message("Application name changed successfully")
             .status(OK)
             .statusCode(OK.value())
             .build()
@@ -84,30 +87,33 @@ public class AppResource {
     }
 
     @PostMapping("/{uid}/release")
-    public ResponseEntity<Response> releaseUpdate(@PathVariable UUID uid, @Valid NewUpdate update, @RequestParam(required = true) MultipartFile file) {
+    public ResponseEntity<Response> releaseUpdate(@PathVariable UUID uid, @Valid UpdateRequest update, @RequestParam(required = true) MultipartFile file) {
         App app = appService.get(uid);
-        String filename = fixFilename(file.getOriginalFilename());
+        String appName = fixString(app.getName());
+        String filename = randomFilename(file.getOriginalFilename());
+        String filePath = new StringBuilder()
+            .append(path)
+            .append(appName)
+            .append("/")
+            .append(filename)
+            .toString();
 
         try {
-            file.transferTo(new File(path.concat(filename)));
+            file.transferTo(new File(filePath));
             app.setUpdateURL(filename);
         } catch (Exception e) {
             throw new ConflictException(ERROR_UPLOADS.concat(e.getMessage()));
         }
 
-        Update _update = new Update(update.version(), update.overview());
+        Update request = updateMapper.toDomain(update);
         
-        UUID createdUid = appService.releaseUpdate(app, _update);
-        URI uri = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{uid}/release/{uid}")
-            .buildAndExpand(app.getUid().toString(), createdUid.toString())
-            .toUri();
-        return ResponseEntity.created(uri).body(
+        appService.releaseUpdate(app, request);
+        return ResponseEntity.ok(
             Response.builder()
             .timeStamp(now())
-            .status(CREATED)
-            .statusCode(CREATED.value())
+            .message("New update released successfully")
+            .status(OK)
+            .statusCode(OK.value())
             .build()
         );
     }
@@ -118,18 +124,18 @@ public class AppResource {
         return ResponseEntity.noContent().build();
     }
 
-    private String fixFilename(String filename) {
+    private String randomFilename(String filename) {
         return UUID.randomUUID()
             .toString()
             .concat("-")
-            .concat(filename.replace(" ", "")
-                .replace(":", "")
-                .replace("\\", "")
-        );
+            .concat(fixString(filename));
+    }
+
+    private String fixString(String str) {
+        return str.replace(" ", "")
+            .replace(":", "")
+            .replace("\\", "");
     }
 
     private record NewApp(@NotBlank @Size(max = 100) String name) {}
-    private record NewUpdate(@Version String version, @NotBlank @Size(max = 300) String overview) {}
-    // TODO implement put resource
-    // TODO implement upload file update    
 }

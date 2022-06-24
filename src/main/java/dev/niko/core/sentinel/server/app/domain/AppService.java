@@ -12,7 +12,7 @@ public interface AppService {
 
     void setName(UUID uid, String name);
 
-    UUID releaseUpdate(App app, Update update);
+    void releaseUpdate(App app, Update update);
 
     boolean isCurrent(UUID uid, String version);
 

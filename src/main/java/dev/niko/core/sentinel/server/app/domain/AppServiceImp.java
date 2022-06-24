@@ -52,11 +52,11 @@ public class AppServiceImp implements AppService {
     }
 
     @Override
-    public UUID releaseUpdate(App app, Update update) {
+    public void releaseUpdate(App app, Update update) {
         log.info("Release update by app: {}" , app.getName());
         app.releaseUpdate(update);
-        
-        return appRepo.save(app).currentUpdateDatails().getUid();
+
+        appRepo.save(app);
     }
 
     @Override

@@ -2,6 +2,7 @@ package dev.niko.core.sentinel.server.app.shared.mapper.update;
 
 import org.springframework.stereotype.Component;
 
+import dev.niko.core.sentinel.server.app.application.UpdateRequest;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.infrastructure.mappings.UpdateMap;
 import dev.niko.core.sentinel.server.app.shared.mapper.DataMapperException;
@@ -31,6 +32,14 @@ public class UpdateMapperImpl implements UpdateMapper {
             domain.getVersion().value(),
             domain.getOverview(),
             uid
+        );
+    }
+
+    @Override
+    public Update toDomain(UpdateRequest request) {
+        return new Update(
+            request.version(),
+            request.overview()
         );
     }
     
