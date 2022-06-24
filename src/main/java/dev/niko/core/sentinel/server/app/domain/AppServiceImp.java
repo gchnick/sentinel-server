@@ -15,12 +15,10 @@ public class AppServiceImp implements AppService {
     private final AppRepo appRepo;
 
     @Override
-    public UUID create(String name) {
-        log.info("Saving new App: {}", name);
-        nameShouldUnique(name);
-        App app = new App(name);
-        app = appRepo.save(app);
-        return app.getUid();
+    public UUID create(App app) {
+        log.info("Saving new App: {}", app.getName());
+        nameShouldUnique(app.getName());
+        return appRepo.save(app).getUid();
     }
 
     @Override

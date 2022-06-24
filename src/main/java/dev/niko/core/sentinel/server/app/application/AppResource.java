@@ -9,8 +9,6 @@ import java.net.URI;
 import java.util.UUID;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import dev.niko.core.sentinel.server.app.application.request.AppRequest;
+import dev.niko.core.sentinel.server.app.application.request.UpdateRequest;
+import dev.niko.core.sentinel.server.app.application.response.Response;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.Update;
@@ -48,8 +49,9 @@ public class AppResource {
     private String path;
 
     @PostMapping
-    public ResponseEntity<Response> save(@RequestBody @Valid NewApp app) {
-        UUID uid = appService.create(app.name());
+    public ResponseEntity<Response> save(@RequestBody @Valid AppRequest app) {
+        App request = appMapper.toDomain(app);
+        UUID uid = appService.create(request);
         URI uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{uid}")
@@ -74,7 +76,7 @@ public class AppResource {
     }
 
     @PostMapping("/{uid}/name")
-    public ResponseEntity<Response> edit(@PathVariable UUID uid, @RequestBody @Valid NewApp app) {
+    public ResponseEntity<Response> edit(@PathVariable UUID uid, @RequestBody @Valid AppRequest app) {
         appService.setName(uid, app.name());
         return ResponseEntity.ok(
             Response.builder()
@@ -144,6 +146,4 @@ public class AppResource {
             .replace(":", "")
             .replace("\\", "");
     }
-
-    private record NewApp(@NotBlank @Size(max = 100) String name) {}
 }

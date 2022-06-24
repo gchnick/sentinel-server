@@ -49,7 +49,7 @@ public class AppResourceShould {
         String mockContent = String.format("{ \"name\": \"%s\" }", appName);
         App app = getApp001();
         UUID idApp001 = app.getUid();
-        when(appService.create(appName)).thenReturn(idApp001);
+        when(appService.create(new App(appName))).thenReturn(idApp001);
 
         // When
         ResultActions result = mvc.perform(post(URL_TEMPLATE)

@@ -2,7 +2,8 @@ package dev.niko.core.sentinel.server.app.shared.mapper;
 
 import org.springframework.stereotype.Component;
 
-import dev.niko.core.sentinel.server.app.application.AppReponse;
+import dev.niko.core.sentinel.server.app.application.request.AppRequest;
+import dev.niko.core.sentinel.server.app.application.response.AppReponse;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMap;
 import dev.niko.core.sentinel.server.app.shared.mapper.update.UpdateMapper;
@@ -24,6 +25,11 @@ public class AppMapperImpl implements AppMapper {
             map.getUpdates().stream().map(u -> mapper.toDomain(u) ).toList(),
             map.getUid()
         );
+    }
+
+    @Override
+    public App toDomain(AppRequest request) {
+        return new App(request.name());
     }
 
     @Override
@@ -55,6 +61,5 @@ public class AppMapperImpl implements AppMapper {
             .overview(overview)
             .updateURL(app.getUpdateURL())
             .build();
-    }
-    
+    }    
 }

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public interface AppService {
 
-    UUID create(String name);
+    UUID create(App app);
 
     App get(UUID uid);
 

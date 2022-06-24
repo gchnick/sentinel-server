@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.UnexpectedTypeException;
 
-import dev.niko.core.sentinel.server.app.application.Response;
+import dev.niko.core.sentinel.server.app.application.response.Response;
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
 import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;

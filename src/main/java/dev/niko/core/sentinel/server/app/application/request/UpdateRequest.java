@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.application;
+package dev.niko.core.sentinel.server.app.application.request;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

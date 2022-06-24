@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppServiceImp;
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
@@ -42,7 +43,7 @@ public class AppServiceJpaShould {
         when(appRepo.findByNameIgnoreCase(appName)).thenReturn(Optional.of(mockAppMap001));
 
         //Assert
-        assertThrows(BadRequestException.class, ()-> appService.create(appName));
+        assertThrows(BadRequestException.class, ()-> appService.create(new App(appName)));
     }
 
     @Test
