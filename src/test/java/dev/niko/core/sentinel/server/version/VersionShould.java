@@ -65,13 +65,26 @@ public class VersionShould {
     }
 
     @Test
-    void check_if_micro_is_higher() {
+    void check_if_patch_is_higher() {
         // Arrange
-        Version micro = new Version("2.3.45");
+        Version patch = new Version("2.3.45");
         Version otherVersion = new Version("2.3.7");
 
         // Act
-        boolean isGreater = micro.isGreater(otherVersion);
+        boolean isGreater = patch.isGreater(otherVersion);
+
+        // Assert
+        assertTrue(isGreater);
+    }
+
+    @Test
+    void check_if_patch_is_higher_2() {
+        // Arrange
+        Version version = new Version("0.0.45");
+        Version otherVersion = new Version("0.0.31");
+
+        // Act
+        boolean isGreater = version.isGreater(otherVersion);
 
         // Assert
         assertTrue(isGreater);
@@ -102,4 +115,5 @@ public class VersionShould {
         // Assert
         assertFalse(isGreater);
     }
+
 }
