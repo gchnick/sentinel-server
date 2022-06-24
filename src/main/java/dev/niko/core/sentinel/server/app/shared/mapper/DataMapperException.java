@@ -1,6 +1,8 @@
 package dev.niko.core.sentinel.server.app.shared.mapper;
 
-public class DataMapperException extends RuntimeException {
+import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
+
+public class DataMapperException extends ConflictException {
 
     public DataMapperException(String message) {
         super(message);

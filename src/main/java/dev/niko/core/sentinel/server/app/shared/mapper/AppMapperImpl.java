@@ -51,7 +51,7 @@ public class AppMapperImpl implements AppMapper {
     @Override
     public AppReponse toReponse(App app) {
         String overview = null;
-        if(app.currentUpdateDatails() != null) {
+        if(app.updatesAvailable()) {
             overview = app.currentUpdateDatails().getOverview();
         }
         return AppReponse.builder()

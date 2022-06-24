@@ -83,4 +83,8 @@ public class App extends Entity implements AggregateRoot {
         .filter( u -> currentVersion.equals(u.getVersion())).findFirst()
         .orElseThrow(()-> new UpdateNotFoundException(UPDATE_NOT_FOUND));
     }
+
+    public boolean updatesAvailable() {
+        return !updates.isEmpty();
+    }
 }
