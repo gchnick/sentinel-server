@@ -30,6 +30,8 @@ import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.version.validation.Version;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMapper;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -40,6 +42,7 @@ public class AppResource {
     private static final String ERROR_UPLOADS = "Internal server error when uploading file. ";
     
     private final AppService appService;
+    private final AppMapper mapper;
 
     @Value("${config.uploads.path}")
     private String path;
@@ -63,8 +66,9 @@ public class AppResource {
 
     @GetMapping("/{uid}")
     public ResponseEntity<?> get(@PathVariable UUID uid) {
+        App app = appService.get(uid);
         return ResponseEntity.ok(
-            appService.get(uid)
+            mapper.toReponse(app)
         );
     }
 

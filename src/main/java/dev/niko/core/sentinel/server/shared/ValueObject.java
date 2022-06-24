@@ -1,6 +1,8 @@
 package dev.niko.core.sentinel.server.shared;
 
-public interface ValueObject<T> {
+import java.io.Serializable;
+
+public interface ValueObject<T> extends Serializable {
     
     T value();
 }

@@ -23,7 +23,7 @@ public class Version implements ValueObject<String> {
     public Version() {
         this.mayor = 0;
         this.minor = 0;
-        this.micro = 0;
+        this.micro = 1;
     }
 
     public Version(String version) {

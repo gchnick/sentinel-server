@@ -2,6 +2,7 @@ package dev.niko.core.sentinel.server.app.infrastructure.mappings;
 
 import org.springframework.stereotype.Component;
 
+import dev.niko.core.sentinel.server.app.application.AppReponse;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,28 @@ public class AppMapperImpl implements AppMapper {
 
     @Override
     public AppMap toMap(App domain) throws DataMapperException {
+        String uid = null;
+        if( domain.getUid() != null) {
+            uid = domain.getUid().toString();
+        }
         return new AppMap(
             domain.getId(),
             domain.getName(),
             domain.getCurrentVersion().value(),
             domain.getUpdateURL(),
             domain.getUpdates().stream().map( d -> mapper.toMap(d) ).toList(),
-            domain.getUid().toString()
+            uid
         );
+    }
+
+    @Override
+    public AppReponse toReponse(App app) {
+        return AppReponse.builder()
+            .uid(app.getUid().toString())
+            .name(app.getName())
+            .currentVersion(app.getCurrentVersion().value())
+            .updateURL(app.getUpdateURL())
+            .build();
     }
     
 }
