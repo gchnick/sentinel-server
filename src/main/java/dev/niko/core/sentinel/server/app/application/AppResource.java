@@ -91,16 +91,24 @@ public class AppResource {
         App app = appService.get(uid);
         String appName = fixString(app.getName());
         String filename = randomFilename(file.getOriginalFilename());
-        String filePath = new StringBuilder()
-            .append(path)
+        String updateURL = new StringBuilder()
             .append(appName)
             .append("/")
             .append(filename)
             .toString();
 
+        String folderPath = new StringBuilder()
+            .append(path)
+            .append(appName)
+            .append("/")
+            .toString();
+
+        String filePath = folderPath.concat(filename);
+        
         try {
+            new File(folderPath).mkdir();
             file.transferTo(new File(filePath));
-            app.setUpdateURL(filename);
+            app.setUpdateURL(updateURL);
         } catch (Exception e) {
             throw new ConflictException(ERROR_UPLOADS.concat(e.getMessage()));
         }
