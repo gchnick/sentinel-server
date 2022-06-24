@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import dev.niko.core.sentinel.server.app.domain.exception.NameAppInvalidException;
 import dev.niko.core.sentinel.server.app.domain.exception.VersionUpdateIsLessException;
+import dev.niko.core.sentinel.server.app.domain.exception.UpdateNotFoundException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.version.Version;
 import dev.niko.core.sentinel.server.shared.AggregateRoot;
@@ -23,8 +24,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class App extends Entity implements AggregateRoot {
 
-    private static final String NAME_INVALID = "Name app is invalid.";
+    private static final String NAME_INVALID = "Name app is invalid";
     private static final String VERSION_UPDATE_IS_LESS = "Version update is less that current version";
+    private static final String UPDATE_NOT_FOUND = "Update details not found";
 
     private String name;
 
@@ -76,5 +78,11 @@ public class App extends Entity implements AggregateRoot {
 
         updates.add(update);
         currentVersion = update.getVersion();
+    }
+
+    public Update currentUpdateDatails() {
+        return updates == null ? null : updates.stream()
+        .filter( u -> currentVersion.equals(u.getVersion())).findFirst()
+        .orElseThrow(()-> new UpdateNotFoundException(UPDATE_NOT_FOUND));
     }
 }

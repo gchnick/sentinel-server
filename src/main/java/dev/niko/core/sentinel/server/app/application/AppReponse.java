@@ -12,5 +12,6 @@ public record AppReponse(
     String uid,
     String name,
     String currentVersion,
+    String overview,
     String updateURL
     ) {}

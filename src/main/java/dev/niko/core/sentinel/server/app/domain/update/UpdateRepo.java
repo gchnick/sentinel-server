@@ -1,8 +1,9 @@
 package dev.niko.core.sentinel.server.app.domain.update;
 
-import java.util.UUID;
+import java.util.Optional;
 
+// TODO remove this repo
 public interface UpdateRepo {
     
-    UUID save(Update update);
+    Optional<Update> findByUid(String uid);
 }

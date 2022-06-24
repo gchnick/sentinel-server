@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
-import dev.niko.core.sentinel.server.app.domain.update.UpdateRepo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,14 +15,14 @@ public class AppServiceImp implements AppService {
     private static final String ALREADY_REGISTRED = "The name of app is already registered";
     
     private final AppRepo appRepo;
-    private final UpdateRepo updateRepo;
 
     @Override
     public UUID create(String name) {
         log.info("Saving new App: {}", name);
         nameShouldUnique(name);
         App app = new App(name);
-        return appRepo.save(app);
+        app = appRepo.save(app);
+        return app.getUid();
     }
 
     @Override
@@ -56,9 +55,8 @@ public class AppServiceImp implements AppService {
     public UUID releaseUpdate(App app, Update update) {
         log.info("Release update by app: {}" , app.getName());
         app.releaseUpdate(update);
-        UUID uid = updateRepo.save(update);
-        appRepo.save(app);
-        return uid;
+        
+        return appRepo.save(app).currentUpdateDatails().getUid();
     }
 
     @Override

@@ -44,10 +44,15 @@ public class AppMapperImpl implements AppMapper {
 
     @Override
     public AppReponse toReponse(App app) {
+        String overview = null;
+        if(app.currentUpdateDatails() != null) {
+            overview = app.currentUpdateDatails().getOverview();
+        }
         return AppReponse.builder()
             .uid(app.getUid().toString())
             .name(app.getName())
             .currentVersion(app.getCurrentVersion().value())
+            .overview(overview)
             .updateURL(app.getUpdateURL())
             .build();
     }
