@@ -1,9 +1,10 @@
-package dev.niko.core.sentinel.server.app.infrastructure.mappings.update;
+package dev.niko.core.sentinel.server.app.shared.mapper.update;
 
 import org.springframework.stereotype.Component;
 
 import dev.niko.core.sentinel.server.app.domain.update.Update;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.DataMapperException;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.UpdateMap;
+import dev.niko.core.sentinel.server.app.shared.mapper.DataMapperException;
 
 @Component
 public class UpdateMapperImpl implements UpdateMapper {

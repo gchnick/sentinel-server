@@ -1,10 +1,11 @@
-package dev.niko.core.sentinel.server.app.infrastructure.mappings;
+package dev.niko.core.sentinel.server.app.shared.mapper;
 
 import org.springframework.stereotype.Component;
 
 import dev.niko.core.sentinel.server.app.application.AppReponse;
 import dev.niko.core.sentinel.server.app.domain.App;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMapper;
+import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMap;
+import dev.niko.core.sentinel.server.app.shared.mapper.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;
 
 @Component

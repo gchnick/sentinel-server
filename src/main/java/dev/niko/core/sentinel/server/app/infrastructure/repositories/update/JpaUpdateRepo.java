@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.update.UpdateRepo;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMapper;
+import dev.niko.core.sentinel.server.app.shared.mapper.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;
 
 @Component

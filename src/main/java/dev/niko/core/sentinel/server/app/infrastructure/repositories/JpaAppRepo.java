@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppRepo;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMapper;
+import dev.niko.core.sentinel.server.app.shared.mapper.AppMapper;
 import lombok.RequiredArgsConstructor;
 
 @Component

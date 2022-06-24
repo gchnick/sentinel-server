@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.infrastructure.mappings;
+package dev.niko.core.sentinel.server.app.shared.mapper;
 
 public class DataMapperException extends RuntimeException {
 

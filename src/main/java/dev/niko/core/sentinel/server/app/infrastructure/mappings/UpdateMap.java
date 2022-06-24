@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.infrastructure.mappings.update;
+package dev.niko.core.sentinel.server.app.infrastructure.mappings;
 
 import java.util.UUID;
 

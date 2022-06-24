@@ -1,6 +1,4 @@
-package dev.niko.core.sentinel.server.shared;
-
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.DataMapperException;
+package dev.niko.core.sentinel.server.app.shared.mapper;
 
 /**
  * T is Domain class

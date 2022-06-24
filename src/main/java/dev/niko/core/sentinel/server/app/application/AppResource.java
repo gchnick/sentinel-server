@@ -30,8 +30,7 @@ import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.domain.version.validation.Version;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMapper;
-
+import dev.niko.core.sentinel.server.app.shared.mapper.AppMapper;
 import lombok.RequiredArgsConstructor;
 
 @RestController

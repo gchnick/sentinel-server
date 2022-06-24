@@ -17,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.update.UpdateMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
