@@ -11,7 +11,6 @@ import dev.niko.core.sentinel.server.app.domain.exception.NameAppInvalidExceptio
 import dev.niko.core.sentinel.server.app.domain.exception.VersionUpdateIsLessException;
 import dev.niko.core.sentinel.server.app.domain.exception.UpdateNotFoundException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
-import dev.niko.core.sentinel.server.app.domain.version.Version;
 import dev.niko.core.sentinel.server.shared.AggregateRoot;
 import lombok.AllArgsConstructor;
 import lombok.Data;

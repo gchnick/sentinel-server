@@ -1,5 +1,6 @@
-package dev.niko.core.sentinel.server.app.domain.version;
+package dev.niko.core.sentinel.server.app.domain;
 
+import dev.niko.core.sentinel.server.app.domain.exception.VersionFormartException;
 import dev.niko.core.sentinel.server.shared.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -53,15 +54,11 @@ public class Version implements ValueObject<String> {
     }
 
     public boolean isGreater(Version version) {
-        return this.compareTo(version) > 0 ? true : false;
-    }
-
-    public int compareTo(Version version) {
-        return this.size() - version.size();
-    }
-
-    private int size() {
-        return mayor + minor + micro;
+        if(this.equals(version)) return false;
+        if(mayor > version.mayor) return true;
+        if(minor > version.minor) return true;
+        if(micro > version.micro) return true;
+        return false;
     }
 
     @Override

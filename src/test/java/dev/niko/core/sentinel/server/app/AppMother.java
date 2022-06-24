@@ -5,7 +5,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.niko.core.sentinel.server.app.domain.App;
-import dev.niko.core.sentinel.server.app.domain.version.Version;
+import dev.niko.core.sentinel.server.app.domain.Version;
 import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMap;
 
 public abstract class AppMother {

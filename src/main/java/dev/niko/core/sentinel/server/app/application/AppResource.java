@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import dev.niko.core.sentinel.server.app.application.validation.Version;
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppService;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
 import dev.niko.core.sentinel.server.app.domain.update.Update;
-import dev.niko.core.sentinel.server.app.domain.version.validation.Version;
 import dev.niko.core.sentinel.server.app.shared.mapper.AppMapper;
 import lombok.RequiredArgsConstructor;
 
