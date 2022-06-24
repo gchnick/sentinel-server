@@ -32,11 +32,11 @@ public class UpdateMap {
     @Column(nullable = false, unique = true)
     private String uid;
 
-    public UpdateMap(Long id, String version, String overview, UUID uid) {
+    public UpdateMap(Long id, String version, String overview, String uid) {
         this.id = id;
         this.version = version;
         this.overview = overview;
-        this.uid = uid.toString();
+        this.uid = uid;
     }
 
     @PrePersist

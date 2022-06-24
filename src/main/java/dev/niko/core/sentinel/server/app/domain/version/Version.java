@@ -3,11 +3,13 @@ package dev.niko.core.sentinel.server.app.domain.version;
 import dev.niko.core.sentinel.server.shared.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Esta clase es un Value Object de tipo String que representa
  * versiones de software
  */
+@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 public class Version implements ValueObject<String> {

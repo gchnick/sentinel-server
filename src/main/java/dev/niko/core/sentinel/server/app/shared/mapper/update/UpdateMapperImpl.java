@@ -11,6 +11,7 @@ public class UpdateMapperImpl implements UpdateMapper {
 
     @Override
     public Update toDomain(UpdateMap map) throws DataMapperException {
+        
         return new Update(
             map.getId(),
             map.getVersion(),
@@ -21,11 +22,15 @@ public class UpdateMapperImpl implements UpdateMapper {
 
     @Override
     public UpdateMap toMap(Update domain) throws DataMapperException {
+        String uid = null;
+        if(domain.getUid() != null) {
+            uid = domain.getUid().toString();
+        }
         return new UpdateMap(
             domain.getId(),
             domain.getVersion().value(),
             domain.getOverview(),
-            domain.getUid()
+            uid
         );
     }
     
