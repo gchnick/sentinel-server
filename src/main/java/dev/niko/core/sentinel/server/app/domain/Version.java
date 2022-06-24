@@ -31,7 +31,7 @@ public class Version implements ValueObject<String> {
 
     public Version(String version) {
         
-        validateFormat(version);
+        if(!isValidFormat(version)) throw new VersionFormatInvalidException(FORMAT_INVALID);
         
         Map m = toMap(version);
 
@@ -40,28 +40,29 @@ public class Version implements ValueObject<String> {
         this.patch = m.patch;  
     }
 
-    private void validateFormat(String str) {
+    public static boolean isValidFormat(String str) {
         int mayor = 0, minor = 0, patch = 0;
         String[] args = split(str);
 
-        if(args.length != 3) throw new VersionFormatInvalidException(FORMAT_INVALID);
+        if(args.length != 3) return false;
 
         try{
             mayor = Integer.valueOf(args[0]);
             minor = Integer.valueOf(args[1]);
             patch = Integer.valueOf(args[2]);
 
-            if(mayor < 0 || minor < 0 || patch < 0) {
-                throw new VersionFormatInvalidException(FORMAT_INVALID);
-            }
+            if(mayor < 0 || minor < 0 || patch < 0) return false;
 
         }
         catch(NumberFormatException e) {
-            throw new VersionFormatInvalidException(FORMAT_INVALID.concat(String.format(" %s", e.getMessage())));
+            e.printStackTrace();
+            return false;
         }
+
+        return true;
     }
 
-    private String[] split(String str) {
+    private static String[] split(String str) {
         return str.split("\\.");
     }
 

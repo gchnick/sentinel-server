@@ -7,8 +7,7 @@ public class VersionValidator  implements ConstraintValidator<Version, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        // TODO Auto-generated method stub
-        return true;
+        return dev.niko.core.sentinel.server.app.domain.Version.isValidFormat(value);
     }
     
 }

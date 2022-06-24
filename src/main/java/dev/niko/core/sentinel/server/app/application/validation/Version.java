@@ -14,8 +14,7 @@ import javax.validation.Constraint;
 @Target({FIELD, METHOD})
 public @interface Version {
 
-    // TODO colocar mensaje por defecto
-    public abstract java.lang.String message() default "";
+    public abstract java.lang.String message() default "Version format is invalid. Valid format [0-999].[0-999].[0-999]";
   
     public abstract  java.lang.Class<?>[] groups() default {};
   
