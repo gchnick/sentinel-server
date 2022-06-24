@@ -1,9 +1,7 @@
-package dev.niko.core.sentinel.server.app.domain.update;
+package dev.niko.core.sentinel.server.app.domain;
 
 import java.util.UUID;
 
-import dev.niko.core.sentinel.server.app.domain.Entity;
-import dev.niko.core.sentinel.server.app.domain.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

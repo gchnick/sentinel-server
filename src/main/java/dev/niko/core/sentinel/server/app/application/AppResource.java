@@ -27,8 +27,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppService;
+import dev.niko.core.sentinel.server.app.domain.Update;
 import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
-import dev.niko.core.sentinel.server.app.domain.update.Update;
 import dev.niko.core.sentinel.server.app.shared.mapper.AppMapper;
 import dev.niko.core.sentinel.server.app.shared.mapper.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;

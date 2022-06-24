@@ -3,8 +3,6 @@ package dev.niko.core.sentinel.server.app.domain;
 import java.util.UUID;
 
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
-import dev.niko.core.sentinel.server.app.domain.update.Update;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
