@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppRepo;
+import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
 import dev.niko.core.sentinel.server.app.shared.mapper.AppMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -15,17 +16,20 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class JpaAppRepo implements AppRepo {
+
+    private static final String NOT_EXISTS = "Id app not exists";
     
     private final SpringDataAppRepo repo;
     private final AppMapper mapper;
 
     @Override
     public Optional<App> findByUid(String uid) {
-        
         return repo.findByUid(uid).map( m ->
             mapper.toDomain(m)
         ).map(Optional::of)
-        .orElseThrow();
+        .orElseThrow(
+            () -> new NotFoundException(NOT_EXISTS)
+        );
     }
 
     @Override
