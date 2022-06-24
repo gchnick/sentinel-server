@@ -1,6 +1,6 @@
 package dev.niko.core.sentinel.server.app.domain.exception;
 
-public class NameAppInvalidException extends RuntimeException {
+public class NameAppInvalidException extends BadRequestException {
 
     public NameAppInvalidException(String message) {
         super(message);

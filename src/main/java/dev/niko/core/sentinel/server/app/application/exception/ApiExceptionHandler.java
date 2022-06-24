@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.UnexpectedTypeException;
 
 import dev.niko.core.sentinel.server.app.application.Response;
+import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
+import dev.niko.core.sentinel.server.app.domain.exception.ConflictException;
+import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
