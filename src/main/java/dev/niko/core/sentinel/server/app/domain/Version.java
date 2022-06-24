@@ -1,6 +1,6 @@
 package dev.niko.core.sentinel.server.app.domain;
 
-import dev.niko.core.sentinel.server.app.domain.exception.VersionFormartException;
+import dev.niko.core.sentinel.server.app.domain.exception.VersionFormatInvalidException;
 import dev.niko.core.sentinel.server.shared.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Version implements ValueObject<String> {
 
-    private static final String ERROR_MESSAGE = "Format of version is invalid";
+    private static final String FORMAT_INVALID = "Format of version is invalid";
 
     private final Integer mayor;
 
@@ -30,9 +30,21 @@ public class Version implements ValueObject<String> {
     }
 
     public Version(String version) {
-        // TODO implementar revisar el formato con regex
+        
+        validateFormat(version);
+        
+        Map m = toMap(version);
+
+        this.mayor = m.mayor;
+        this.minor = m.minor;
+        this.patch = m.patch;  
+    }
+
+    private void validateFormat(String str) {
         int mayor = 0, minor = 0, patch = 0;
-        String[] args = version.split("\\.");
+        String[] args = split(str);
+
+        if(args.length != 3) throw new VersionFormatInvalidException(FORMAT_INVALID);
 
         try{
             mayor = Integer.valueOf(args[0]);
@@ -40,17 +52,17 @@ public class Version implements ValueObject<String> {
             patch = Integer.valueOf(args[2]);
 
             if(mayor < 0 || minor < 0 || patch < 0) {
-                throw new VersionFormartException(ERROR_MESSAGE);
+                throw new VersionFormatInvalidException(FORMAT_INVALID);
             }
 
         }
         catch(NumberFormatException e) {
-            throw new VersionFormartException(ERROR_MESSAGE.concat(String.format(" %s", e.getMessage())));
+            throw new VersionFormatInvalidException(FORMAT_INVALID.concat(String.format(" %s", e.getMessage())));
         }
+    }
 
-        this.mayor = mayor;
-        this.minor = minor;
-        this.patch = patch;  
+    private String[] split(String str) {
+        return str.split("\\.");
     }
 
     public boolean isGreater(Version version) {
@@ -67,5 +79,16 @@ public class Version implements ValueObject<String> {
     public String value() {
         return String.format("%d.%d.%d", mayor, minor, patch);
     }
+
+    private Map toMap(String str) {
+        String[] args = split(str);
+        return new Map(
+            Integer.valueOf(args[0]),
+            Integer.valueOf(args[0]),
+            Integer.valueOf(args[0])
+        );
+    }
+
+    private record Map (int mayor, int minor, int patch) {}
 
 }
