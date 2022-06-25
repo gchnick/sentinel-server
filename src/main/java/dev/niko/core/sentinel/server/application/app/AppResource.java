@@ -41,14 +41,13 @@ import lombok.RequiredArgsConstructor;
 public class AppResource {
 
     private static final String ERROR_UPLOADS = "Internal server error when uploading file. ";
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
+    private static final String ROLE_DEV = "ROLE_DEV";
+    private static final String ROLE_CLIENT = "ROLE_CLIENT";
     
     private final AppService appService;
     private final AppMapper appMapper;
     private final UpdateMapper updateMapper;
-
-    private static final String ROLE_ADMIN = "ROLE_ADMIN";
-    private static final String ROLE_DEV = "ROLE_DEV";
-    private static final String ROLE_CLIENT = "ROLE_CLIENT";
 
     @Value("${config.uploads.path}")
     private String path;
