@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,9 +46,14 @@ public class AppResource {
     private final AppMapper appMapper;
     private final UpdateMapper updateMapper;
 
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
+    private static final String ROLE_DEV = "ROLE_DEV";
+    private static final String ROLE_CLIENT = "ROLE_CLIENT";
+
     @Value("${config.uploads.path}")
     private String path;
 
+    @Secured({ROLE_ADMIN, ROLE_DEV})
     @PostMapping
     public ResponseEntity<Response> save(@RequestBody @Valid AppRequest app) {
         App request = appMapper.toDomain(app);
@@ -67,6 +73,8 @@ public class AppResource {
         );
     }
 
+    
+    @Secured(ROLE_CLIENT)
     @GetMapping("/{uid}")
     public ResponseEntity<?> get(@PathVariable UUID uid) {
         App app = appService.get(uid);
@@ -75,6 +83,7 @@ public class AppResource {
         );
     }
 
+    @Secured(ROLE_DEV)
     @PostMapping("/{uid}/name")
     public ResponseEntity<Response> edit(@PathVariable UUID uid, @RequestBody @Valid AppRequest app) {
         appService.setName(uid, app.name());
@@ -88,6 +97,7 @@ public class AppResource {
         );
     }
 
+    @Secured({ROLE_ADMIN, ROLE_DEV})
     @PostMapping("/{uid}/release")
     public ResponseEntity<Response> releaseUpdate(@PathVariable UUID uid, @Valid UpdateRequest update, @RequestParam(required = true) MultipartFile file) {
         App app = appService.get(uid);
@@ -128,6 +138,7 @@ public class AppResource {
         );
     }
 
+    @Secured(ROLE_ADMIN)
     @DeleteMapping("/{uid}")
     public ResponseEntity<?> delete(@PathVariable UUID uid) {
         appService.delete(uid);
