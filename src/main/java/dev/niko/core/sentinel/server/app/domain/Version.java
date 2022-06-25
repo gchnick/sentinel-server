@@ -1,7 +1,7 @@
 package dev.niko.core.sentinel.server.app.domain;
 
 import dev.niko.core.sentinel.server.app.domain.exception.VersionFormatInvalidException;
-import dev.niko.core.sentinel.server.shared.ValueObject;
+import dev.niko.core.sentinel.server.app.domain.shared.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

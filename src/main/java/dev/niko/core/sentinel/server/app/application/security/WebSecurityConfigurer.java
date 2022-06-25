@@ -1,10 +1,10 @@
-package dev.niko.core.sentinel.server.app.infrastructure.security.config;
+package dev.niko.core.sentinel.server.app.application.security;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import dev.niko.core.sentinel.server.app.application.auth.UserDetailsService;
-import dev.niko.core.sentinel.server.app.infrastructure.security.EmailPasswordAuthenticationFilter;
-import dev.niko.core.sentinel.server.app.infrastructure.security.OncePerRequestAuthorizationFilter;
+import dev.niko.core.sentinel.server.app.application.security.auth.AuthenticationFilter;
+import dev.niko.core.sentinel.server.app.application.security.request.RequestAuthorizationFilter;
+import dev.niko.core.sentinel.server.app.infrastructure.user.dependence.UserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
-public class WebSecurityEmailPassword extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -39,13 +39,13 @@ public class WebSecurityEmailPassword extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        EmailPasswordAuthenticationFilter authenticationFilter = new EmailPasswordAuthenticationFilter(authenticationManagerBean());
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
         authenticationFilter.setFilterProcessesUrl(FILTER_PROCESSES_URL);
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.addFilter(authenticationFilter);
-        http.addFilterBefore(new OncePerRequestAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new RequestAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

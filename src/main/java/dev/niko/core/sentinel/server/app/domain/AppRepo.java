@@ -2,7 +2,7 @@ package dev.niko.core.sentinel.server.app.domain;
 
 import java.util.Optional;
 
-import dev.niko.core.sentinel.server.shared.Repository;
+import dev.niko.core.sentinel.server.app.domain.shared.Repository;
 
 public interface AppRepo extends Repository<App> {
 

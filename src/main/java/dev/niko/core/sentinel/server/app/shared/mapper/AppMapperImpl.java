@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import dev.niko.core.sentinel.server.app.application.request.AppRequest;
 import dev.niko.core.sentinel.server.app.application.response.AppReponse;
 import dev.niko.core.sentinel.server.app.domain.App;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMap;
+import dev.niko.core.sentinel.server.app.infrastructure.app.mapping.AppMap;
 import dev.niko.core.sentinel.server.app.shared.mapper.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;
 

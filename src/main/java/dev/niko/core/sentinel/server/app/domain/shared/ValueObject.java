@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.shared;
+package dev.niko.core.sentinel.server.app.domain.shared;
 
 import java.io.Serializable;
 

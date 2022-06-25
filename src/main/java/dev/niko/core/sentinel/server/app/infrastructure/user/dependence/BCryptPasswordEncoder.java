@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.infrastructure.security;
+package dev.niko.core.sentinel.server.app.infrastructure.user.dependence;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

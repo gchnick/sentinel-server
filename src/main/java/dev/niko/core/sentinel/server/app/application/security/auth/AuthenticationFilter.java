@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.infrastructure.security;
+package dev.niko.core.sentinel.server.app.application.security.auth;
 
 import static dev.niko.core.sentinel.server.app.shared.EnvironmentVariable.SECRET;
 import static java.util.Map.of;
@@ -30,27 +30,23 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author Nick Galán
- */
 @RequiredArgsConstructor
-@Slf4j
-public class EmailPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
     private final AuthenticationManager authenticationManager;
 
-    private final int ACCESS_TOKEN_EXPIRES_MINUTES = 10;
-    private final int REFRESH_TOKEN_EXPIRES_MINUTES = 30;
+    private final int ACCESS_TOKEN_EXPIRES_MINUTES = 480;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         
-        String email = request.getParameter("email");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
-        log.info("Email is: {} ", email);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -64,12 +60,17 @@ public class EmailPasswordAuthenticationFilter extends UsernamePasswordAuthentic
 
         new ObjectMapper().writeValue(response.getOutputStream(), 
             Response.builder()
-                .data(of("tokens", getTokens(access)))
+                .data(of("tokens", getToken(access)))
                 .message("Tokens created")
                 .status(OK)
                 .statusCode(OK.value())
             .build()
         );
+    }
+
+    private TokenReponse getToken(Access access) {
+        String accessToken = createJWT(access, ACCESS_TOKEN_EXPIRES_MINUTES);
+        return new TokenReponse(accessToken);
     }
 
     private String createJWT(Access access, int minExpires) {
@@ -81,12 +82,6 @@ public class EmailPasswordAuthenticationFilter extends UsernamePasswordAuthentic
             .withIssuer(access.request().getRequestURL().toString())
             .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
             .sign(algorithm);
-    }
-
-    private TokenReponse getTokens(Access access) {
-        String accessToken = createJWT(access, ACCESS_TOKEN_EXPIRES_MINUTES);
-        String refreshToken = createJWT(access, REFRESH_TOKEN_EXPIRES_MINUTES);
-        return new TokenReponse(accessToken, refreshToken);
     }
 
     private record Access(Authentication authentication, HttpServletRequest request) {}

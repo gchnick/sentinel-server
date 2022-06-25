@@ -9,8 +9,8 @@ import java.util.UUID;
 
 import dev.niko.core.sentinel.server.app.domain.exception.NameAppInvalidException;
 import dev.niko.core.sentinel.server.app.domain.exception.VersionUpdateIsLessException;
+import dev.niko.core.sentinel.server.app.domain.shared.AggregateRoot;
 import dev.niko.core.sentinel.server.app.domain.exception.UpdateNotFoundException;
-import dev.niko.core.sentinel.server.shared.AggregateRoot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

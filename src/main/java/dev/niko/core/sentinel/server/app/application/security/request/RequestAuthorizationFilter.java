@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.app.infrastructure.security;
+package dev.niko.core.sentinel.server.app.application.security.request;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -34,15 +34,15 @@ import lombok.extern.slf4j.Slf4j;
  * @author Nick Galán
  */
 @Slf4j
-public class OncePerRequestAuthorizationFilter extends OncePerRequestFilter {
+public class RequestAuthorizationFilter extends OncePerRequestFilter {
+
     private final String AUTH_TOKEN_PATH = "/api/v1/auth/token";
-    private final String AUTH_TOKEN_REFRESH_PATH = "/api/v1/auth/token/refresh";
     private final String PREFIX_AUTH = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        if(request.getServletPath().equals(AUTH_TOKEN_PATH) || request.getServletPath().equals(AUTH_TOKEN_REFRESH_PATH)) {
+        if(request.getServletPath().equals(AUTH_TOKEN_PATH)) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);

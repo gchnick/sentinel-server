@@ -20,8 +20,8 @@ import dev.niko.core.sentinel.server.app.domain.App;
 import dev.niko.core.sentinel.server.app.domain.AppServiceImp;
 import dev.niko.core.sentinel.server.app.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.app.domain.exception.NotFoundException;
-import dev.niko.core.sentinel.server.app.infrastructure.mappings.AppMap;
-import dev.niko.core.sentinel.server.app.infrastructure.repositories.SpringDataAppRepo;
+import dev.niko.core.sentinel.server.app.infrastructure.app.mapping.AppMap;
+import dev.niko.core.sentinel.server.app.infrastructure.app.repository.SpringDataAppRepo;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(ReplaceUnderscores.class)
