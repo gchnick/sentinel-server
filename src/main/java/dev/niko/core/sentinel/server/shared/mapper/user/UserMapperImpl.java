@@ -13,13 +13,20 @@ import dev.niko.core.sentinel.server.shared.mapper.DataMapperException;
 @Component
 public class UserMapperImpl implements UserMapper {
 
+    private static final String BAD_REQUEST = "Error in request body";
+
     @Override
     public UserMap toMap(UserRequest user) throws DataMapperException {
-        List<RoleMap> roles = user.roles()
-            .stream()
-            .map(UserRole::valueOf)
-            .map(RoleMap::new)
-            .toList();
+        List<RoleMap> roles = null;
+        try {
+            roles = user.roles()
+                .stream()
+                .map(UserRole::valueOf)
+                .map(RoleMap::new)
+                .toList();
+        } catch(IllegalArgumentException e) {
+            throw new DataMapperException(BAD_REQUEST);
+        }
         return new UserMap(
             user.username(),
             user.password(),
