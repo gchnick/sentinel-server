@@ -2,6 +2,7 @@ package dev.niko.core.sentinel.server.infrastructure.user.service;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.niko.core.sentinel.server.infrastructure.user.mapping.UserMap;
@@ -15,10 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo repo;
+    private final PasswordEncoder encoder;
 
     @Override
     public UserMap create(UserMap user) {
         log.info("Saving new user");
+        user.setPassword(encoder.encode(user.getPassword()));
         return repo.save(user);
     }
 
