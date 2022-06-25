@@ -24,5 +24,10 @@ public class RoleMap extends BaseMap {
     @Enumerated(STRING)
     @Column(nullable = false, length = 16)
     private UserRole role;
-    
+
+    protected enum UserRole {
+        ROLE_ADMIN,
+        ROLE_DEV,
+        ROLE_CLIENT
+    }
 }

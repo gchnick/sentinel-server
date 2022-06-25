@@ -48,6 +48,5 @@ public class UserMap extends BaseMap {
         .map( r -> r.getRole().name() )
         .map(SimpleGrantedAuthority::new)
         .toList();
-    }
-    
+    }    
 }
