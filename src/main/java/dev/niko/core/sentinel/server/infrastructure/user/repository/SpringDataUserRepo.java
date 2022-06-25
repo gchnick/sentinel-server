@@ -11,5 +11,7 @@ import dev.niko.core.sentinel.server.infrastructure.user.mapping.UserMap;
 public interface SpringDataUserRepo extends JpaRepository<UserMap, Long> {
 
     Optional<UserMap> findByUsernameIgnoreCase(String username);
+
+    void deleteByUsername(String username);
  
 }

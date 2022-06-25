@@ -31,8 +31,8 @@ public class JpaUserRepo implements UserRepo {
     }
 
     @Override
-    public void delete(Long id) {
-        repo.deleteById(id);
+    public void delete(String username) {
+        repo.deleteByUsername(username);
     }
     
 }

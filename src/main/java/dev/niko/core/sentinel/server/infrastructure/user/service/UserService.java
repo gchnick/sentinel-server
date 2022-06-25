@@ -10,6 +10,6 @@ public interface UserService {
 
     Optional<UserMap> findByUsername(String username);
 
-    void delete(Long id);
+    void delete(String username);
     
 }

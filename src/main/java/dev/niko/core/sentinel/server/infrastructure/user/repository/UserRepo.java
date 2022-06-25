@@ -12,5 +12,5 @@ public interface UserRepo {
 
     boolean isAlreadyRegisteredUsername(String username);
 
-    void delete(Long id);
+    void delete(String username);
 }

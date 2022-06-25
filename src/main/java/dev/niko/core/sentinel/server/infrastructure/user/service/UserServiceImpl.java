@@ -36,9 +36,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
-        log.info("Deleting user by id: {}", id);
-        repo.delete(id);
+    public void delete(String username) {
+        log.info("Deleting user: {}", username);
+        repo.delete(username);
         
     }
 
