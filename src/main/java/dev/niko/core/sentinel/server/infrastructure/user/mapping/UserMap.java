@@ -1,7 +1,7 @@
 package dev.niko.core.sentinel.server.infrastructure.user.mapping;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.FetchType.EAGER;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +38,7 @@ public class UserMap extends BaseMap {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(cascade = ALL, fetch = LAZY, orphanRemoval = true)
+    @OneToMany(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     @JoinColumn(name = "id_user")
     private List<RoleMap> roles  = new ArrayList<>();
 
