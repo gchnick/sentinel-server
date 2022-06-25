@@ -4,5 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public record AppRequest(
-    @NotBlank @Size(max = 100) String name
+    @NotBlank(message = "Application name cannot be empty")
+    @Size(message = "Application name must have a maximum of 100 characters" ,max = 100)
+    String name
 ) {}
