@@ -17,7 +17,7 @@ public class AppServiceImp implements AppService {
     @Override
     public UUID create(App app) {
         log.info("Saving new App: {}", app.getName());
-        nameShouldUnique(app.getName());
+        nameUnique(app.getName());
         return appRepo.save(app).getUid();
     }
 
@@ -39,7 +39,7 @@ public class AppServiceImp implements AppService {
         App app = appRepo.findByUid(uid.toString()).get();
         if(app.getName() != name) {
             log.info("App name changed, validating name");
-            nameShouldUnique(name);
+            nameUnique(name);
         }
 
         log.info("Changing app name by id: {} to {}" , uid, name);
@@ -63,7 +63,7 @@ public class AppServiceImp implements AppService {
         });
     }
 
-    private void nameShouldUnique(String name) {
+    private void nameUnique(String name) {
         if(appRepo.isAlreadyRegisteredName(name)) {
             log.info("App name: \"{}\" is already registred", name);
             throw new BadRequestException(ALREADY_REGISTRED);

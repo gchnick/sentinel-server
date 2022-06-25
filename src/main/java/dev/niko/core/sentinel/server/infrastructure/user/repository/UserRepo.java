@@ -10,5 +10,7 @@ public interface UserRepo {
     
     Optional<UserMap> findByUsername(String username);
 
+    boolean isAlreadyRegisteredUsername(String username);
+
     void delete(Long id);
 }

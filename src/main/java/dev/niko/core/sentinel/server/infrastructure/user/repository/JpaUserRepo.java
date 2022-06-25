@@ -21,6 +21,11 @@ public class JpaUserRepo implements UserRepo {
     }
 
     @Override
+    public boolean isAlreadyRegisteredUsername(String username) {
+        return repo.findByUsernameIgnoreCase(username).isPresent();
+    }
+
+    @Override
     public UserMap save(UserMap user) {
         return repo.save(user);
     }
