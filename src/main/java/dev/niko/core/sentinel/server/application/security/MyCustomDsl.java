@@ -1,4 +1,4 @@
-package dev.niko.core.sentinel.server.infrastructure.user.dependence;
+package dev.niko.core.sentinel.server.application.security;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
