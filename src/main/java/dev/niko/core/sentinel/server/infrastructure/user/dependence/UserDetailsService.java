@@ -1,5 +1,6 @@
 package dev.niko.core.sentinel.server.infrastructure.user.dependence;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,17 +13,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    private static final String USER_NOT_FOUND = "Email not found in the database";
+    private static final String USER_NOT_FOUND = "Username not found in the database";
 
     private final UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         
         UserMap user = userService
-            .findByUsername(email)
+            .findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
        
-        return new org.springframework.security.core.userdetails.User(user.getUsername() , user.getPassword(), true, true, true, true, user.getAuthorities());
+        return new User(user.getUsername() , user.getPassword(), true, true, true, true, user.getAuthorities());
     }
 }

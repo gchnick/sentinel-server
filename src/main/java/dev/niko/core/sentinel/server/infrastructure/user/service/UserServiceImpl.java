@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserMap> findByUsername(String username) {
         log.info("Finding user by username: {}", username);
-        return repo.findBUsername(username);
+        return repo.findByUsername(username);
     }
 
     @Override

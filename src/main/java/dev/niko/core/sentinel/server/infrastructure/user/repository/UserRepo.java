@@ -8,7 +8,7 @@ public interface UserRepo {
 
     UserMap save(UserMap user);
     
-    Optional<UserMap> findBUsername(String username);
+    Optional<UserMap> findByUsername(String username);
 
     void delete(Long id);
 }

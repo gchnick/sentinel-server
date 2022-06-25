@@ -16,8 +16,8 @@ public class JpaUserRepo implements UserRepo {
     private final SpringDataUserRepo repo;
 
     @Override
-    public Optional<UserMap> findBUsername(String username) {
-        return repo.findBUsernameIgnoreCase(username);
+    public Optional<UserMap> findByUsername(String username) {
+        return repo.findByUsernameIgnoreCase(username);
     }
 
     @Override
