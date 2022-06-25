@@ -1,7 +1,6 @@
 package dev.niko.core.sentinel.server.application.security.auth;
 
 import static dev.niko.core.sentinel.server.shared.EnvironmentVariable.SECRET;
-import static java.util.Map.of;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -18,7 +17,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dev.niko.core.sentinel.server.application.security.response.TokenResponse;
 import dev.niko.core.sentinel.server.application.shared.Response;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,19 +56,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         response.setContentType(APPLICATION_JSON_VALUE);
 
+        String accessToken = createJWT(access, ACCESS_TOKEN_EXPIRES_MINUTES);
+
         new ObjectMapper().writeValue(response.getOutputStream(), 
             Response.builder()
-                .data(of("tokens", getToken(access)))
-                .message("Tokens created")
+                .accessToken(accessToken)
+                .message("Token created")
                 .status(OK)
                 .statusCode(OK.value())
             .build()
         );
-    }
-
-    private TokenResponse getToken(Access access) {
-        String accessToken = createJWT(access, ACCESS_TOKEN_EXPIRES_MINUTES);
-        return new TokenResponse(accessToken);
     }
 
     private String createJWT(Access access, int minExpires) {

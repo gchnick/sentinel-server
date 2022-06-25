@@ -18,6 +18,7 @@ public record Response(
     int statusCode,
     HttpStatus status,
     String message,
+    String accessToken,
     String path,
     Map<?, ?> errors,
     Map<?, ?> data) {    
