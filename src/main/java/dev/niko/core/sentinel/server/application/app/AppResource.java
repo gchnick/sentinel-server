@@ -89,14 +89,44 @@ public class AppResource {
         );
     }
 
+    @Secured({ROLE_ADMIN, ROLE_DEV})
+    @PostMapping("/{uid}/release")
+    public ResponseEntity<Response> releaseUpdate(@PathVariable UUID uid, @Valid UpdateRequest update, @RequestParam(required = true) MultipartFile file) throws IOException {
+
+        App app = appService.get(uid);
+        String appName = StringUtils.cleanPath(app.getName());
+        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        String randomFilename = randomFilename(filename);
+        
+        Path folder = Paths.get(PATH, appName).toAbsolutePath().normalize();
+        Files.createDirectories(folder);
+        
+        Path fileStorage = Paths.get(folder.toString(), randomFilename).toAbsolutePath().normalize();
+        
+        copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);
+
+        app.setUpdateURL(randomFilename);
+
+        Update request = updateMapper.toDomain(update);
+        appService.releaseUpdate(app, request);
+        return ResponseEntity.ok(
+            Response.builder()
+            .timeStamp(now())
+            .message("New update released successfully")
+            .status(OK)
+            .statusCode(OK.value())
+            .build()
+        );
+    }
 
     @Secured(ROLE_CLIENT)
     @GetMapping("/{uid}/{version}/update")
     public ResponseEntity<?> update(@PathVariable UUID uid, @PathVariable String version) throws IOException {
 
         App app = appService.isCurrent(uid, version);
+        String appName = StringUtils.cleanPath(app.getName());
         String file = app.getUpdateURL();
-        Path filePath = Paths.get(PATH, file).toAbsolutePath().normalize();
+        Path filePath = Paths.get(PATH, appName, file).toAbsolutePath().normalize();
 
         if(!Files.exists(filePath)) {
             throw new ConflictException(FILE_NOT_FOUNT);
@@ -121,32 +151,6 @@ public class AppResource {
             Response.builder()
             .timeStamp(now())
             .message("Application name changed successfully")
-            .status(OK)
-            .statusCode(OK.value())
-            .build()
-        );
-    }
-
-    @Secured({ROLE_ADMIN, ROLE_DEV})
-    @PostMapping("/{uid}/release")
-    public ResponseEntity<Response> releaseUpdate(@PathVariable UUID uid, @Valid UpdateRequest update, @RequestParam(required = true) MultipartFile file) throws IOException {
-
-        App app = appService.get(uid);
-        String appName = StringUtils.cleanPath(app.getName());
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
-        String randomFilename = randomFilename(filename);
-        Path fileStorage = Paths.get(PATH, appName, randomFilename).toAbsolutePath().normalize();
-        Path url = Paths.get(appName, randomFilename).toAbsolutePath().normalize();
-        
-        copy(file.getInputStream(), fileStorage, REPLACE_EXISTING);  
-        app.setUpdateURL(url.toString());
-
-        Update request = updateMapper.toDomain(update);
-        appService.releaseUpdate(app, request);
-        return ResponseEntity.ok(
-            Response.builder()
-            .timeStamp(now())
-            .message("New update released successfully")
             .status(OK)
             .statusCode(OK.value())
             .build()
