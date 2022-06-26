@@ -6,7 +6,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.Files.copy;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -40,6 +39,7 @@ import dev.niko.core.sentinel.server.application.shared.Response;
 import dev.niko.core.sentinel.server.domain.App;
 import dev.niko.core.sentinel.server.domain.AppService;
 import dev.niko.core.sentinel.server.domain.Update;
+import dev.niko.core.sentinel.server.domain.exception.ConflictException;
 import dev.niko.core.sentinel.server.shared.mapper.AppMapper;
 import dev.niko.core.sentinel.server.shared.mapper.update.UpdateMapper;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AppResource {
 
-    private static final String FILE_NOT_FOUNT = "File not found.";
+    private static final String FILE_NOT_FOUNT = "Update file not found";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
     private static final String ROLE_DEV = "ROLE_DEV";
     private static final String ROLE_CLIENT = "ROLE_CLIENT";
@@ -89,20 +89,17 @@ public class AppResource {
         );
     }
 
-    /**
-     * TODO Usar excepciones conocidas
-     * TODO implementar actualizacion en un solo paso
-     */
+
     @Secured(ROLE_CLIENT)
     @GetMapping("/{uid}/{version}/update")
     public ResponseEntity<?> update(@PathVariable UUID uid, @PathVariable String version) throws IOException {
 
-        App app = appService.get(uid);
+        App app = appService.isCurrent(uid, version);
         String file = app.getUpdateURL();
         Path filePath = Paths.get(PATH, file).toAbsolutePath().normalize();
 
         if(!Files.exists(filePath)) {
-            throw new FileNotFoundException(FILE_NOT_FOUNT);
+            throw new ConflictException(FILE_NOT_FOUNT);
         }
 
         Resource resource = new UrlResource(filePath.toUri());

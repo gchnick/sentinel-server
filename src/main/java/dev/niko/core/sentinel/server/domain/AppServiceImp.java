@@ -2,6 +2,7 @@ package dev.niko.core.sentinel.server.domain;
 
 import java.util.UUID;
 
+import dev.niko.core.sentinel.server.domain.exception.AppIsUpdatedException;
 import dev.niko.core.sentinel.server.domain.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,10 +29,13 @@ public class AppServiceImp implements AppService {
     }
 
     @Override
-    public boolean isCurrent(UUID uid, String version) {
+    public App isCurrent(UUID uid, String version) {
         log.info("Checked if it is current by id: {}" , uid);
         App app = appRepo.findByUid(uid.toString()).get();
-        return app.isCurrent(version);
+        if(app.isCurrent(version)) {
+            throw new AppIsUpdatedException();
+        }
+        return app;
     }
 
     @Override
