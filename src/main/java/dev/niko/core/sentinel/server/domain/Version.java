@@ -65,10 +65,8 @@ public class Version implements ValueObject<String> {
         return str.split("\\.");
     }
 
-    public boolean isGreater(Version version) {
-        if(this.equals(version)) return false;
-
-        return this.size() > version.size() ? true : false;
+    public boolean isGreaterOrEqual(Version version) {
+        return this.size() >= version.size() ? true : false;
     }
 
     private int size() {
