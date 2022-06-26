@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import dev.niko.core.sentinel.server.domain.exception.NameAppInvalidException;
+import dev.niko.core.sentinel.server.domain.exception.AppNameInvalidException;
 import dev.niko.core.sentinel.server.domain.exception.VersionUpdateIsLessException;
 import dev.niko.core.sentinel.server.domain.shared.AggregateRoot;
 import dev.niko.core.sentinel.server.domain.exception.UpdateNotFoundException;
@@ -21,11 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 public class App extends Entity implements AggregateRoot {
-
-    private static final String NAME_INVALID = "Name app is invalid";
-    private static final String VERSION_UPDATE_IS_LESS = "Version update is less that current version";
-    private static final String UPDATE_NOT_FOUND = "Update details not found";
-
+   
     private String name;
 
     private Version currentVersion;
@@ -52,14 +48,14 @@ public class App extends Entity implements AggregateRoot {
 
     public void setName(String name) {
         if(name == null || name.isBlank()) {
-            throw new NameAppInvalidException(NAME_INVALID);
+            throw new AppNameInvalidException();
         }
 
         this.name = name;
     }
 
     public boolean isCurrent(Version version) {
-        return currentVersion.isGreater(version);
+        return version.isGreaterOrEqual(currentVersion);
     }
 
     public boolean isCurrent(String version) {
@@ -68,8 +64,8 @@ public class App extends Entity implements AggregateRoot {
 
     public void releaseUpdate(Update update) {
 
-        if(isCurrent(update.getVersion())) {
-            throw new VersionUpdateIsLessException(VERSION_UPDATE_IS_LESS);
+        if(!update.getVersion().isGreater(currentVersion)) {
+            throw new VersionUpdateIsLessException();
         }
 
         updates = new ArrayList<>(updates);
@@ -81,7 +77,7 @@ public class App extends Entity implements AggregateRoot {
     public Update currentUpdateDatails() {
         return updates == null ? null : updates.stream()
         .filter( u -> currentVersion.equals(u.getVersion())).findFirst()
-        .orElseThrow(()-> new UpdateNotFoundException(UPDATE_NOT_FOUND));
+        .orElseThrow(()-> new UpdateNotFoundException());
     }
 
     public boolean updatesAvailable() {

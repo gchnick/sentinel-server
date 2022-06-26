@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.niko.core.sentinel</groupId>
 	<artifactId>server</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>server</name>
 	<description>Update server for Monolithic Java projects developed by Niko Dev</description>
 	<properties>
@@ -47,11 +47,6 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

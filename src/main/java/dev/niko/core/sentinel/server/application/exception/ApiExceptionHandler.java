@@ -2,6 +2,7 @@ package dev.niko.core.sentinel.server.application.exception;
 
 import static java.time.LocalDateTime.now;
 import static java.util.Map.of;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -19,6 +20,7 @@ import dev.niko.core.sentinel.server.application.shared.Response;
 import dev.niko.core.sentinel.server.domain.exception.BadRequestException;
 import dev.niko.core.sentinel.server.domain.exception.ConflictException;
 import dev.niko.core.sentinel.server.domain.exception.NotFoundException;
+import dev.niko.core.sentinel.server.domain.exception.SuccessException;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -38,6 +40,18 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 
 @ControllerAdvice
 public class ApiExceptionHandler {
+
+    @ResponseStatus(OK)
+    @ExceptionHandler({SuccessException.class})
+    @ResponseBody
+    public Response success(Exception exception) {
+        return Response.builder()
+            .timeStamp(now())
+            .message(exception.getMessage())
+            .status(OK)
+            .statusCode(OK.value())
+            .build();
+    }
 
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler({NotFoundException.class})

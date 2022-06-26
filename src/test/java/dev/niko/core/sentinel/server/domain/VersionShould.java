@@ -17,7 +17,7 @@ public class VersionShould {
         Version otherVersion = new Version("1.2.4");
 
         // Act
-        boolean isGreater = version.isGreater(otherVersion);
+        boolean isGreater = version.isGreaterOrEqual(otherVersion);
 
         // Assert
         assertTrue(isGreater);
@@ -30,7 +30,7 @@ public class VersionShould {
         Version otherVersion = new Version("0.4.7");
 
         // Act
-        boolean isGreater = mayor.isGreater(otherVersion);
+        boolean isGreater = mayor.isGreaterOrEqual(otherVersion);
         
         // Assert
         assertTrue(isGreater);
@@ -43,7 +43,7 @@ public class VersionShould {
         Version otherVersion = new Version("1.4.7");
 
         // Ac
-        boolean isGreater = minor.isGreater(otherVersion);
+        boolean isGreater = minor.isGreaterOrEqual(otherVersion);
        
         // Assert
         assertTrue(isGreater);
@@ -56,7 +56,7 @@ public class VersionShould {
         Version otherVersion = new Version("0.1.0");
 
         // Ac
-        boolean isGreater = minor.isGreater(otherVersion);
+        boolean isGreater = minor.isGreaterOrEqual(otherVersion);
        
         // Assert
         assertFalse(isGreater);
@@ -69,7 +69,7 @@ public class VersionShould {
         Version otherVersion = new Version("2.3.7");
 
         // Act
-        boolean isGreater = patch.isGreater(otherVersion);
+        boolean isGreater = patch.isGreaterOrEqual(otherVersion);
 
         // Assert
         assertTrue(isGreater);
@@ -82,7 +82,7 @@ public class VersionShould {
         Version otherVersion = new Version("0.0.31");
 
         // Act
-        boolean isGreater = version.isGreater(otherVersion);
+        boolean isGreater = version.isGreaterOrEqual(otherVersion);
 
         // Assert
         assertTrue(isGreater);
@@ -95,7 +95,7 @@ public class VersionShould {
         Version otherVersion = new Version("1.3.4");
 
         // Act
-        boolean isGreater = version.isGreater(otherVersion);
+        boolean isGreater = version.isGreaterOrEqual(otherVersion);
 
         // Assert
         assertFalse(isGreater);
@@ -108,7 +108,7 @@ public class VersionShould {
         Version otherVersion = new Version("1.3.4");
 
         // Act
-        boolean isGreater = version.isGreater(otherVersion);
+        boolean isGreater = version.isGreaterOrEqual(otherVersion);
 
         // Assert
         assertFalse(isGreater);
