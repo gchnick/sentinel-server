@@ -119,6 +119,7 @@ public class AppResource {
         );
     }
 
+    // TODO add update details
     @Secured(ROLE_CLIENT)
     @GetMapping("/{uid}/{version}/update")
     public ResponseEntity<?> update(@PathVariable UUID uid, @PathVariable String version) throws IOException {

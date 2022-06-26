@@ -55,7 +55,7 @@ public class App extends Entity implements AggregateRoot {
     }
 
     public boolean isCurrent(Version version) {
-        return currentVersion.isGreaterOrEqual(version);
+        return version.isGreaterOrEqual(currentVersion);
     }
 
     public boolean isCurrent(String version) {
