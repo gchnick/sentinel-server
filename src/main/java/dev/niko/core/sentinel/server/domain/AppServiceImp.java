@@ -29,6 +29,14 @@ public class AppServiceImp implements AppService {
     }
 
     @Override
+    public void releaseUpdate(App app, Update update) {
+        log.info("Release update by app: {}" , app.getName());
+        app.releaseUpdate(update);
+
+        appRepo.save(app);
+    }
+
+    @Override
     public App isCurrent(UUID uid, String version) {
         log.info("Checked if it is current by id: {}" , uid);
         App app = appRepo.findByUid(uid.toString()).get();
@@ -48,14 +56,6 @@ public class AppServiceImp implements AppService {
 
         log.info("Changing app name by id: {} to {}" , uid, name);
         app.setName(name);
-        appRepo.save(app);
-    }
-
-    @Override
-    public void releaseUpdate(App app, Update update) {
-        log.info("Release update by app: {}" , app.getName());
-        app.releaseUpdate(update);
-
         appRepo.save(app);
     }
 
